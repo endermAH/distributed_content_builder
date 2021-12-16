@@ -1,30 +1,30 @@
 ## Результаты исследований
 
 ### Один агент
-Agent count: 1
-Build count: 15
-Average build time: 15.05
-Time for each build:
-15 15 15 15 15 15 15 15 15 15 15 16 15 15 15 15 15 15 15 15
+1. Agent count: 1
+2. Build count: 15
+3. Average build time: 15.05
+4. Time for each build:
+15 15 15 15 15 15 15 15 15 15 15 16 15 15 15 15 15 15 15 15 <br>
 
 ### Три агента
-Agent count: 3
-Build count: 15
-Average build time: 6.8
-Time for each build:
+1. Agent count: 3
+2. Build count: 15
+3. Average build time: 6.8
+4. Time for each build:
 7 7 5 6 6 6 7 8 7 7 7 7 7 6 6 7 7 7 8 8
 
 ### Большой объем
-Agent count: 10
-Build count: 100
-Average build time: 15.55
-Time for each build:
+1. Agent count: 10
+2. Build count: 100
+3. Average build time: 15.55
+4. Time for each build:
 17 14 17 14 15 17 15 16 17 17 16 15 16 14 16 14 16 14 17 14
 
-Agent count: 1
-Build count: 100
-Average build time: 100
-Time for each build:
+1. Agent count: 1
+2. Build count: 100
+3. Average build time: 100
+4. Time for each build:
 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100
 
 ### Вывод №1
