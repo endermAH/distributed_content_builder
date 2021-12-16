@@ -51,16 +51,16 @@ Queue::Queue(int min, int max, int count){
     free(task_sizes_);
 }
 
-bool Queue::AssignTask(Agent* a){
+bool Queue::AssignTask(Agent* agent){
     Task* task;
     bool task_assigned = false;
     for(int i = 0; i < task_count_; i++) {
-        if (task_list_[i].status_ == Task::TASK_READY_FOR_BUILD || task_list_[i].status_ == Task::TASK_FAILED) {
+        if (task_list_[i].status_ == Task::TaskStatus::TASK_READY_FOR_BUILD || task_list_[i].status_ == Task::TaskStatus::TASK_FAILED) {
             task = &task_list_[i];
-            task->assigned_agent_ = a;
-            task->status_ = Task::TASK_IN_PROGRESS;
+            task->assigned_agent_ = agent;
+            task->status_ = Task::TaskStatus::TASK_IN_PROGRESS;
             task_assigned = true;
-            a->DoTask(task);
+            agent->DoTask(task);
             break;
         }
     }
@@ -70,7 +70,7 @@ bool Queue::AssignTask(Agent* a){
 bool Queue::AllTasksComplete() {
     bool done = true;
     for(int i = 0; i < task_count_; i++) {
-        if (task_list_[i].status_ != Task::TASK_DONE) {
+        if (task_list_[i].status_ != Task::TaskStatus::TASK_DONE) {
             done = false;
         }
     }

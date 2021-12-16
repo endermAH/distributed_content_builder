@@ -6,18 +6,18 @@
 //
 
 #include <iostream>
-#include <unistd.h>
-#include <thread>
-#include <time.h>
 #include <cstdlib>
+#include <thread>
 #include "Queue.hpp"
 #include "Agent.hpp"
 
-const int kAgentCount = 10;
+const int kAgentCount = 16; // Wat if we have more than 22 nodes?
 const int kBuildSize = 100;
 const int kTestsCount = 1;
 
 int main(int argc, const char * argv[]) {
+    unsigned int n = std::thread::hardware_concurrency();
+    std::cout << n << " concurrent threads are supported.\n";
     Agent* current_agent = new Agent(999);
     
     double time[kTestsCount];

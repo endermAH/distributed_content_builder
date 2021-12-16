@@ -15,12 +15,11 @@ class Task;
 
 class Agent {
 public:
-    enum States {
+    enum class AgentStates {
         STATE_AVAILABLE, STATE_BUSY, STATE_OFFLINE
     };
-    int state_;
+    AgentStates state_;
     int identity_;
-
 public:
     Agent(int id);
     

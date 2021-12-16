@@ -14,16 +14,16 @@ class Agent;
 
 class Task {
 public:
-    enum TaskStatus {
+    enum class TaskStatus {
         TASK_IN_PROGRESS, TASK_DONE, TASK_READY_FOR_BUILD, TASK_FAILED
     };
     int size_;
     Agent* assigned_agent_;
-    int status_;
+    TaskStatus status_;
 public:
     Task(int count) {
         size_ = count;
-        status_ = TASK_READY_FOR_BUILD;
+        status_ = TaskStatus::TASK_READY_FOR_BUILD;
     }
 };
 

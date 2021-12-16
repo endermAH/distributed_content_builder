@@ -14,18 +14,18 @@
 #include "Queue.hpp"
 
 Agent::Agent(int id) {
-    state_ = STATE_AVAILABLE;
+    state_ = AgentStates::STATE_AVAILABLE;
     identity_ = id;
 }
 
 void Agent::DoTask(Task* job) {
-    auto payload = [](Task* j, Agent* a){
-        a->state_ = STATE_BUSY;
-        printf("[%d] Job started (%d)\n", a->identity_, j->size_);
-        usleep(1000000 * j->size_);
-        printf("[%d] Job finished\n", a->identity_);
-        j->status_ = Task::TASK_DONE;
-        a->state_ = STATE_AVAILABLE;
+    auto payload = [](Task* job, Agent* agent){
+        agent->state_ = AgentStates::STATE_BUSY;
+        printf("[%d] Task started (%d)\n", agent->identity_, job->size_);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000 * job->size_));
+        printf("[%d] Task finished\n", agent->identity_);
+        job->status_ = Task::TaskStatus::TASK_DONE;
+        agent->state_ = AgentStates::STATE_AVAILABLE;
     };
     std::thread thread(payload, job, this);
     thread.detach();
@@ -37,13 +37,13 @@ Agent* Agent::GetAllAgents(int count) {
 
 double Agent::BuildContent(int content_size, int count) {
     Agent* a_list = GetAllAgents(count);
-    Queue* q = new Queue(1, 10, content_size);
+    Queue* queue = new Queue(1, 10, content_size);
     time_t start, end;
     time(&start);
-    while (!q->AllTasksComplete()) {
+    while (!queue->AllTasksComplete()) {
         for (int i = 0; i < count; i++) {
-            if(a_list[i].state_ == STATE_AVAILABLE) {
-                q->AssignTask(&a_list[i]);
+            if(a_list[i].state_ == AgentStates::STATE_AVAILABLE) {
+                queue->AssignTask(&a_list[i]);
             }
         }
         usleep(1000);

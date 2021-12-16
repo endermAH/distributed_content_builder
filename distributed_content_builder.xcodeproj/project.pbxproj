@@ -63,11 +63,11 @@
 		1B045E53276B3DE40072CAAB /* distributed_content_builder */ = {
 			isa = PBXGroup;
 			children = (
-				1B045E54276B3DE40072CAAB /* main.cpp */,
-				1B045E7D276B98920072CAAB /* Queue.cpp */,
-				1B045E7E276B98920072CAAB /* Queue.hpp */,
 				1B045E80276B9A5F0072CAAB /* Agent.cpp */,
 				1B045E81276B9A5F0072CAAB /* Agent.hpp */,
+				1B045E7D276B98920072CAAB /* Queue.cpp */,
+				1B045E7E276B98920072CAAB /* Queue.hpp */,
+				1B045E54276B3DE40072CAAB /* main.cpp */,
 			);
 			path = distributed_content_builder;
 			sourceTree = "<group>";
