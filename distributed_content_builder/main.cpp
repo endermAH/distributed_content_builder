@@ -11,8 +11,9 @@
 #include <time.h>
 #include <cstdlib>
 
-const int kAgentCount = 3;
-const int kBuildCount = 15;
+const int kAgentCount = 10;
+const int kBuildCount = 100;
+const int kTestsCout = 20;
 
 class Agent {
     
@@ -135,7 +136,7 @@ public:
     
     double buildContent(int count) {
         Agent* a_list = getAllAgents();
-        Queue* q = new Queue(1, 5, count);
+        Queue* q = new Queue(1, 10, count);
         time_t start, end;
         time(&start);
         while (!q->JobsDone()) {
@@ -166,21 +167,19 @@ private:
 int main(int argc, const char * argv[]) {
     Agent* current_agent = new Agent(999);
     
-    const int tests_cout = 100;
-    
-    double time[tests_cout];
+    double time[kTestsCout];
     double summ = 0;
-    for(int i = 0; i < tests_cout; i++) {
+    for(int i = 0; i < kTestsCout; i++) {
         time[i] = current_agent->buildContent(kBuildCount);
         summ += time[i];
     }
-    double avg = summ/tests_cout;
+    double avg = summ/kTestsCout;
     
     std::cout << "Agent count: " << kAgentCount << std::endl;
     std::cout << "Build count: " << kBuildCount << std::endl;
     std::cout << "Average build time: " << avg << std::endl;
     std::cout << "Time for each build: " << std::endl;
-    for(int i = 0; i < tests_cout; i++) {
+    for(int i = 0; i < kTestsCout; i++) {
         std::cout << time[i] << " ";
     }
     
