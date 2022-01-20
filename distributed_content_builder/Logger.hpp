@@ -20,7 +20,6 @@ private:
     const std::string YELLOW = "\033[33m";
 public:
     UnixLogger() {
-        return;
     }
     
     void LogError(std::string message) {
@@ -51,7 +50,6 @@ public:
 class MacLogger: public ILogger {
 public:
     MacLogger() {
-        return;
     }
     
     void LogError(std::string message) {

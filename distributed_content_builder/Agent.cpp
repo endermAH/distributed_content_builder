@@ -37,7 +37,7 @@ void Agent::DoTask(ITask* job) {
 }
 
 Agent* Agent::GetAvailableAgents() {
-    return GenerateAgents(count_);
+    return GenerateAgents(count_); // TODO: Replace to INetwork->GetAvailableAgents
 }
 
 double Agent::BuildContent(int content_size) {
@@ -67,7 +67,7 @@ double Agent::BuildContent(int content_size) {
                     break;
             }
         }
-        usleep(1000);
+        usleep(1000); // TODO replace with c++ style 
     }
     time(&end);
     double build_time = difftime(end, start);
