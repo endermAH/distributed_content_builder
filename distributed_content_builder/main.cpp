@@ -12,21 +12,21 @@
 #include "Agent.hpp"
 
 const int kAgentCount = 16; // Wat if we have more than 22 nodes?
-const int kBuildSize = 100;
+const int kBuildSize = 50;
 const int kTestsCount = 1;
 
 int main(int argc, const char * argv[]) {
     unsigned int n = std::thread::hardware_concurrency();
     std::cout << n << " concurrent threads are supported.\n";
-    Agent* current_agent = new Agent(999);
+    Agent* current_agent = new Agent(999, kAgentCount);
     
     double time[kTestsCount];
     double summ = 0;
     for(int i = 0; i < kTestsCount; i++) {
-        time[i] = current_agent->BuildContent(kBuildSize, kAgentCount);
+        time[i] = current_agent->BuildContent(kBuildSize);
         summ += time[i];
     }
-    double avg = summ/kTestsCount;
+    double avg = summ / kTestsCount;
     
     std::cout << "Agent count: " << kAgentCount << std::endl;
     std::cout << "Build count: " << kBuildSize << std::endl;

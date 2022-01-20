@@ -10,6 +10,8 @@
 		1B045E55276B3DE40072CAAB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B045E54276B3DE40072CAAB /* main.cpp */; };
 		1B045E7F276B98920072CAAB /* Queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B045E7D276B98920072CAAB /* Queue.cpp */; };
 		1B045E82276B9A5F0072CAAB /* Agent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B045E80276B9A5F0072CAAB /* Agent.cpp */; };
+		1B4C36322798BB0B00F2BDE4 /* TestNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C36302798BB0B00F2BDE4 /* TestNetwork.cpp */; };
+		1B8178432798C3AC00DB442B /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B8178412798C3AC00DB442B /* Logger.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +33,11 @@
 		1B045E7E276B98920072CAAB /* Queue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Queue.hpp; sourceTree = "<group>"; };
 		1B045E80276B9A5F0072CAAB /* Agent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Agent.cpp; sourceTree = "<group>"; };
 		1B045E81276B9A5F0072CAAB /* Agent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Agent.hpp; sourceTree = "<group>"; };
+		1B4C36302798BB0B00F2BDE4 /* TestNetwork.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestNetwork.cpp; sourceTree = "<group>"; };
+		1B4C36312798BB0B00F2BDE4 /* TestNetwork.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TestNetwork.hpp; sourceTree = "<group>"; };
+		1B8178412798C3AC00DB442B /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
+		1B8178422798C3AC00DB442B /* Logger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Logger.hpp; sourceTree = "<group>"; };
+		1B9B2C152798A63300E60AD2 /* Interfaces.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interfaces.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +75,11 @@
 				1B045E7D276B98920072CAAB /* Queue.cpp */,
 				1B045E7E276B98920072CAAB /* Queue.hpp */,
 				1B045E54276B3DE40072CAAB /* main.cpp */,
+				1B9B2C152798A63300E60AD2 /* Interfaces.h */,
+				1B4C36302798BB0B00F2BDE4 /* TestNetwork.cpp */,
+				1B4C36312798BB0B00F2BDE4 /* TestNetwork.hpp */,
+				1B8178412798C3AC00DB442B /* Logger.cpp */,
+				1B8178422798C3AC00DB442B /* Logger.hpp */,
 			);
 			path = distributed_content_builder;
 			sourceTree = "<group>";
@@ -130,7 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B045E82276B9A5F0072CAAB /* Agent.cpp in Sources */,
+				1B8178432798C3AC00DB442B /* Logger.cpp in Sources */,
 				1B045E55276B3DE40072CAAB /* main.cpp in Sources */,
+				1B4C36322798BB0B00F2BDE4 /* TestNetwork.cpp in Sources */,
 				1B045E7F276B98920072CAAB /* Queue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

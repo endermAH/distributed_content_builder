@@ -9,24 +9,25 @@
 #define Agent_hpp
 
 #include <stdio.h>
+#include "Interfaces.h"
+#include "Logger.hpp"
 
 class Queue;
 class Task;
 
-class Agent {
+class Agent: public IAgent {
 public:
-    enum class AgentStates {
-        STATE_AVAILABLE, STATE_BUSY, STATE_OFFLINE
-    };
-    AgentStates state_;
+    MacLogger *logger_;
+    AgentStatus state_;
     int identity_;
+    int count_;
 public:
-    Agent(int id);
+    Agent(int id, int count);
     
-    void DoTask(Task* job);
+    void DoTask(ITask* job);
     Agent* GetAllAgents(); // Not implemented !!!
-    Agent* GetAllAgents(int count);
-    double BuildContent(int content_size, int count);
+    Agent* GetAvailableAgents();
+    double BuildContent(int content_size);
     
 private:
     Agent* GenerateAgents(int count);

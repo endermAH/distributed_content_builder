@@ -12,8 +12,11 @@
 #include <cstdlib>
 #include "Queue.hpp"
 #include "Agent.hpp"
+#include "TestNetwork.hpp"
 
-Queue::Queue(int count){
+Queue::Queue(int count, ILogger* logger)
+    :logger_(logger)
+{
     task_count_ = count;
     task_list_ = static_cast<Task*>(malloc(sizeof(Task)*count));
     for(int i = 0; i < count; i++) {
@@ -21,7 +24,9 @@ Queue::Queue(int count){
     }
 }
 
-Queue::Queue(int min, int max, int count){
+Queue::Queue(int min, int max, int count, ILogger* logger)
+    :logger_(logger)
+{
     std::srand(std::time(nullptr));
     int* task_sizes_ = static_cast<int*>(malloc(sizeof(int)*count));
     int tmp_count = count;
@@ -44,23 +49,24 @@ Queue::Queue(int min, int max, int count){
     
     std::cout << "Jobs to do: \n";
     for (int i=0; i<task_count_; i++){
-        std::cout << task_list_[i].size_ << " ";
+        std::cout << task_list_[i].GetSize() << " ";
     }
     std::cout << std::endl;
     
     free(task_sizes_);
 }
 
-bool Queue::AssignTask(Agent* agent){
+bool Queue::AssignTask(IAgent* agent){
     Task* task;
     bool task_assigned = false;
     for(int i = 0; i < task_count_; i++) {
-        if (task_list_[i].status_ == Task::TaskStatus::TASK_READY_FOR_BUILD || task_list_[i].status_ == Task::TaskStatus::TASK_FAILED) {
+        if (task_list_[i].GetStatus() == ITask::TaskStatus::TASK_READY_FOR_BUILD || task_list_[i].GetStatus() == ITask::TaskStatus::TASK_FAILED) {
             task = &task_list_[i];
             task->assigned_agent_ = agent;
-            task->status_ = Task::TaskStatus::TASK_IN_PROGRESS;
+            task->status_ = ITask::TaskStatus::TASK_IN_PROGRESS;
             task_assigned = true;
-            agent->DoTask(task);
+            TestNetwork* network = new TestNetwork(logger_);
+            network->SendTaskToRemoteAgent(agent, task);
             break;
         }
     }
@@ -70,7 +76,7 @@ bool Queue::AssignTask(Agent* agent){
 bool Queue::AllTasksComplete() {
     bool done = true;
     for(int i = 0; i < task_count_; i++) {
-        if (task_list_[i].status_ != Task::TaskStatus::TASK_DONE) {
+        if (task_list_[i].status_ != ITask::TaskStatus::TASK_DONE) {
             done = false;
         }
     }

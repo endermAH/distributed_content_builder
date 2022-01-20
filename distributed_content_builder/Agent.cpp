@@ -10,47 +10,68 @@
 #include <thread>
 #include <time.h>
 #include <cstdlib>
+#include <string>
 #include "Agent.hpp"
 #include "Queue.hpp"
+#include "Logger.hpp"
+#include "TestNetwork.hpp"
 
-Agent::Agent(int id) {
-    state_ = AgentStates::STATE_AVAILABLE;
+Agent::Agent(int id, int count){
+    state_ = AgentStatus::STATE_AVAILABLE;
     identity_ = id;
+    count_ = count;
+    logger_ = new MacLogger();
 }
 
-void Agent::DoTask(Task* job) {
-    auto payload = [](Task* job, Agent* agent){
-        agent->state_ = AgentStates::STATE_BUSY;
-        printf("[%d] Task started (%d)\n", agent->identity_, job->size_);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000 * job->size_));
-        printf("[%d] Task finished\n", agent->identity_);
-        job->status_ = Task::TaskStatus::TASK_DONE;
-        agent->state_ = AgentStates::STATE_AVAILABLE;
+void Agent::DoTask(ITask* job) {
+    auto payload = [](ITask* job, Agent* agent){
+        agent->state_ = AgentStatus::STATE_BUSY;
+//        printf("[%d] Task started (%d)\n", agent->identity_, job->GetSize());
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000 * job->GetSize()));
+//        printf("[%d] Task finished\n", agent->identity_);
+        job->SetStatus(ITask::TaskStatus::TASK_DONE);
+        agent->state_ = AgentStatus::STATE_TASK_COMPLETE;
     };
     std::thread thread(payload, job, this);
     thread.detach();
 }
 
-Agent* Agent::GetAllAgents(int count) {
-    return GenerateAgents(count);
+Agent* Agent::GetAvailableAgents() {
+    return GenerateAgents(count_);
 }
 
-double Agent::BuildContent(int content_size, int count) {
-    Agent* a_list = GetAllAgents(count);
-    Queue* queue = new Queue(1, 10, content_size);
+double Agent::BuildContent(int content_size) {
+    Agent* a_list = GetAvailableAgents();
+    Queue* queue = new Queue(1, 10, content_size, logger_);
+    TestNetwork* network = new TestNetwork(logger_);
     time_t start, end;
     time(&start);
     while (!queue->AllTasksComplete()) {
-        for (int i = 0; i < count; i++) {
-            if(a_list[i].state_ == AgentStates::STATE_AVAILABLE) {
-                queue->AssignTask(&a_list[i]);
+        for (int i = 0; i < count_; i++) {
+            Agent* agent = &a_list[i];
+            AgentStatus status = network->CheckAgentStatus(agent);
+            switch ( status )
+            {
+                case AgentStatus::STATE_TASK_COMPLETE:
+                    network->CollectTaskResult(agent);
+                    queue->AssignTask(agent);
+                    break;
+                case AgentStatus::STATE_AVAILABLE:
+                    queue->AssignTask(agent);
+                    break;
+                case AgentStatus::STATE_BUSY:
+                    continue;
+                    break;
+                case AgentStatus::STATE_OFFLINE:
+                    logger_->LogWarning("Node " + std::to_string(agent->identity_) + " is now offline!");
+                    break;
             }
         }
         usleep(1000);
     }
     time(&end);
     double build_time = difftime(end, start);
-    std::cout << "Build time: " << build_time << "s" << std::endl;
+    logger_->LogSuccess("Build time: " + std::to_string(build_time) + "s");
     return build_time;
 }
 
@@ -58,7 +79,7 @@ Agent* Agent::GenerateAgents(int count) {
     Agent* agents;
     agents = static_cast<Agent*>(malloc(sizeof(Agent)*count));
     for(int i = 0; i < count; i++){
-        new(agents + i) Agent(i);
+        new(agents + i) Agent(i, count);
     }
     return agents;
 }
