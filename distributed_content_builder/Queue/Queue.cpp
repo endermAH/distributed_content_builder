@@ -10,6 +10,8 @@
 #include <thread>
 #include <time.h>
 #include <cstdlib>
+#include <vector>
+
 #include "Queue.hpp"
 #include "Agent.hpp"
 #include "TestNetwork.hpp"
@@ -18,9 +20,9 @@ Queue::Queue(int count, ILogger* logger)
     :logger_(logger)
 {
     task_count_ = count;
-    task_list_ = static_cast<Task*>(malloc(sizeof(Task)*count));
+    
     for(int i = 0; i < count; i++) {
-        new(task_list_ + i) Task(1);
+        task_list_.push_back(new Task(1));
     }
 }
 
@@ -42,14 +44,13 @@ Queue::Queue(int min, int max, int count, ILogger* logger)
     task_sizes_[task_count_] = tmp_count;
     task_count_++;
     
-    task_list_ = static_cast<Task*>(malloc(sizeof(Task)*task_count_));
     for(int i = 0; i < task_count_; i++) {
-        new(task_list_ + i) Task(task_sizes_[i]);
+        task_list_.push_back(new Task(task_sizes_[i]));
     }
     
     std::cout << "Jobs to do: \n";
     for (int i=0; i<task_count_; i++){
-        std::cout << task_list_[i].GetSize() << " ";
+        std::cout << task_list_[i]->GetSize() << " ";
     }
     std::cout << std::endl;
     
@@ -60,8 +61,8 @@ bool Queue::AssignTask(IRemoteAgent* agent){
     Task* task;
     bool task_assigned = false;
     for(int i = 0; i < task_count_; i++) {
-        if (task_list_[i].GetStatus() == ITask::TaskStatus::TASK_READY_FOR_BUILD || task_list_[i].GetStatus() == ITask::TaskStatus::TASK_FAILED) {
-            task = &task_list_[i];
+        task = task_list_[i];
+        if (task->GetStatus() == ITask::TaskStatus::TASK_READY_FOR_BUILD || task->GetStatus() == ITask::TaskStatus::TASK_FAILED) {
             task->assigned_agent_ = agent;
             task->status_ = ITask::TaskStatus::TASK_IN_PROGRESS;
             task_assigned = true;
@@ -76,7 +77,7 @@ bool Queue::AssignTask(IRemoteAgent* agent){
 bool Queue::AllTasksComplete() {
     bool done = true;
     for(int i = 0; i < task_count_; i++) {
-        if (task_list_[i].status_ != ITask::TaskStatus::TASK_DONE) {
+        if (task_list_[i]->status_ != ITask::TaskStatus::TASK_DONE) {
             done = false;
         }
     }

@@ -9,6 +9,7 @@
 #define Queue_hpp
 
 #include <stdio.h>
+#include <vector>
 
 #include "IRemoteAgent.h"
 #include "IQueue.h"
@@ -43,7 +44,7 @@ public:
 class Queue: public IQueue {
 public:
     ILogger* logger_;
-    Task* task_list_;
+    std::vector<Task*> task_list_;
     int task_count_;
     
 public:
