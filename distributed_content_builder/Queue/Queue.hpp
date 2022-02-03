@@ -9,14 +9,17 @@
 #define Queue_hpp
 
 #include <stdio.h>
-#include "Interfaces.h"
+
+#include "IRemoteAgent.h"
+#include "IQueue.h"
+#include "ILogger.h"
 
 class Agent;
 
 class Task: public ITask {
 public:
     int size_;
-    IAgent* assigned_agent_;
+    IRemoteAgent* assigned_agent_;
     TaskStatus status_;
 public:
     Task(int count) {
@@ -47,7 +50,7 @@ public:
     Queue(int count, ILogger* logger);
     Queue(int min, int max, int count, ILogger* logger);
     
-    bool AssignTask(IAgent* a);
+    bool AssignTask(IRemoteAgent* a);
     bool AllTasksComplete();
     
 };

@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include "Interfaces.h"
-#include "Logger.hpp"
+#include "MacLogger.hpp"
 
 class Queue;
 class Task;

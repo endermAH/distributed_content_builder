@@ -56,7 +56,7 @@ Queue::Queue(int min, int max, int count, ILogger* logger)
     free(task_sizes_);
 }
 
-bool Queue::AssignTask(IAgent* agent){
+bool Queue::AssignTask(IRemoteAgent* agent){
     Task* task;
     bool task_assigned = false;
     for(int i = 0; i < task_count_; i++) {

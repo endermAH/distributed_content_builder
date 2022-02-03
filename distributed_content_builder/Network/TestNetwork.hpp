@@ -10,8 +10,12 @@
 
 #include <stdio.h>
 #include <string>
+
 #include "Interfaces.h"
-#include "Agent.hpp"
+#include "ILogger.h"
+#include "INetwork.h"
+#include "IRemoteAgent.h"
+#include "RemoteAgent.hpp"
 
 class Agent;
 
@@ -22,21 +26,17 @@ public:
     TestNetwork(ILogger *logger)
         :logger_(logger) {}
     
-    bool SendTaskToRemoteAgent(IAgent *target_agent, ITask *task) {
-        logger_->LogInfo("Sending task to agent");
+    bool SendTaskToRemoteAgent(IRemoteAgent *target_agent, ITask *task) {
+        logger_->LogInfo("Sending task to agent[" + std::to_string(target_agent->id_) + "]");
         target_agent->DoTask(task);
         return true;
     }
     
-    IAgent::AgentStatus CheckAgentStatus(IAgent *target_agent) {
-        return IAgent::AgentStatus::STATE_AVAILABLE;
-    }
-    
-    IAgent::AgentStatus CheckAgentStatus(Agent *target_agent) {
+    IRemoteAgent::AgentStatus CheckAgentStatus(IRemoteAgent *target_agent) {
         return target_agent->state_;
     }
     
-    void CollectTaskResult(IAgent *target_agent){
+    void CollectTaskResult(IRemoteAgent *target_agent){
         return;
     }
 };

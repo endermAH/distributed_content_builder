@@ -13,7 +13,7 @@
 #include <string>
 #include "Agent.hpp"
 #include "Queue.hpp"
-#include "Logger.hpp"
+#include "MacLogger.hpp"
 #include "TestNetwork.hpp"
 
 Agent::Agent(int id, int count){
@@ -41,38 +41,38 @@ Agent* Agent::GetAvailableAgents() {
 }
 
 double Agent::BuildContent(int content_size) {
-    Agent* a_list = GetAvailableAgents();
-    Queue* queue = new Queue(1, 10, content_size, logger_);
-    TestNetwork* network = new TestNetwork(logger_);
-    time_t start, end;
-    time(&start);
-    while (!queue->AllTasksComplete()) {
-        for (int i = 0; i < count_; i++) {
-            Agent* agent = &a_list[i];
-            AgentStatus status = network->CheckAgentStatus(agent);
-            switch ( status )
-            {
-                case AgentStatus::STATE_TASK_COMPLETE:
-                    network->CollectTaskResult(agent);
-                    queue->AssignTask(agent);
-                    break;
-                case AgentStatus::STATE_AVAILABLE:
-                    queue->AssignTask(agent);
-                    break;
-                case AgentStatus::STATE_BUSY:
-                    continue;
-                    break;
-                case AgentStatus::STATE_OFFLINE:
-                    logger_->LogWarning("Node " + std::to_string(agent->identity_) + " is now offline!");
-                    break;
-            }
-        }
-        usleep(1000); // TODO replace with c++ style 
-    }
-    time(&end);
-    double build_time = difftime(end, start);
-    logger_->LogSuccess("Build time: " + std::to_string(build_time) + "s");
-    return build_time;
+//    Agent* a_list = GetAvailableAgents();
+//    Queue* queue = new Queue(1, 10, content_size, logger_);
+//    TestNetwork* network = new TestNetwork(logger_);
+//    time_t start, end;
+//    time(&start);
+//    while (!queue->AllTasksComplete()) {
+//        for (int i = 0; i < count_; i++) {
+//            Agent* agent = &a_list[i];
+//            AgentStatus status = network->CheckAgentStatus(agent);
+//            switch ( status )
+//            {
+//                case AgentStatus::STATE_TASK_COMPLETE:
+//                    network->CollectTaskResult(agent);
+//                    queue->AssignTask(agent);
+//                    break;
+//                case AgentStatus::STATE_AVAILABLE:
+//                    queue->AssignTask(agent);
+//                    break;
+//                case AgentStatus::STATE_BUSY:
+//                    continue;
+//                    break;
+//                case AgentStatus::STATE_OFFLINE:
+//                    logger_->LogWarning("Node " + std::to_string(agent->identity_) + " is now offline!");
+//                    break;
+//            }
+//        }
+//        usleep(1000); // TODO replace with c++ style
+//    }
+//    time(&end);
+//    double build_time = difftime(end, start);
+//    logger_->LogSuccess("Build time: " + std::to_string(build_time) + "s");
+    return 1;
 }
 
 Agent* Agent::GenerateAgents(int count) {

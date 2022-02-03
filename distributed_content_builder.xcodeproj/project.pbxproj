@@ -11,7 +11,9 @@
 		1B045E7F276B98920072CAAB /* Queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B045E7D276B98920072CAAB /* Queue.cpp */; };
 		1B045E82276B9A5F0072CAAB /* Agent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B045E80276B9A5F0072CAAB /* Agent.cpp */; };
 		1B4C36322798BB0B00F2BDE4 /* TestNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C36302798BB0B00F2BDE4 /* TestNetwork.cpp */; };
-		1B8178432798C3AC00DB442B /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B8178412798C3AC00DB442B /* Logger.cpp */; };
+		1BF2845127ABC4210094A6DF /* RemoteAgent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1BF2844F27ABC4210094A6DF /* RemoteAgent.cpp */; };
+		1BF2845527ABDCB00094A6DF /* TestContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1BF2845327ABDCB00094A6DF /* TestContent.cpp */; };
+		1BF656AD27AA9714008FAE81 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1BF656AB27AA9714008FAE81 /* Controller.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,9 +37,22 @@
 		1B045E81276B9A5F0072CAAB /* Agent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Agent.hpp; sourceTree = "<group>"; };
 		1B4C36302798BB0B00F2BDE4 /* TestNetwork.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestNetwork.cpp; sourceTree = "<group>"; };
 		1B4C36312798BB0B00F2BDE4 /* TestNetwork.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TestNetwork.hpp; sourceTree = "<group>"; };
-		1B8178412798C3AC00DB442B /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
-		1B8178422798C3AC00DB442B /* Logger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Logger.hpp; sourceTree = "<group>"; };
+		1B8178422798C3AC00DB442B /* MacLogger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MacLogger.hpp; sourceTree = "<group>"; };
 		1B9B2C152798A63300E60AD2 /* Interfaces.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interfaces.h; sourceTree = "<group>"; };
+		1BF2844F27ABC4210094A6DF /* RemoteAgent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RemoteAgent.cpp; sourceTree = "<group>"; };
+		1BF2845027ABC4210094A6DF /* RemoteAgent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RemoteAgent.hpp; sourceTree = "<group>"; };
+		1BF2845327ABDCB00094A6DF /* TestContent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestContent.cpp; sourceTree = "<group>"; };
+		1BF2845427ABDCB00094A6DF /* TestContent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TestContent.hpp; sourceTree = "<group>"; };
+		1BF6569E27AA7A80008FAE81 /* ITask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ITask.h; sourceTree = "<group>"; };
+		1BF6569F27AA7B05008FAE81 /* IQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IQueue.h; sourceTree = "<group>"; };
+		1BF656A027AA7BC8008FAE81 /* ILogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILogger.h; sourceTree = "<group>"; };
+		1BF656A127AA7CA5008FAE81 /* INetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INetwork.h; sourceTree = "<group>"; };
+		1BF656A627AA7E09008FAE81 /* UnixLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnixLogger.h; sourceTree = "<group>"; };
+		1BF656A727AA8EC7008FAE81 /* IController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IController.h; sourceTree = "<group>"; };
+		1BF656A827AA92CD008FAE81 /* IContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IContent.h; sourceTree = "<group>"; };
+		1BF656A927AA93D1008FAE81 /* IRemoteAgent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRemoteAgent.h; sourceTree = "<group>"; };
+		1BF656AB27AA9714008FAE81 /* Controller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Controller.cpp; sourceTree = "<group>"; };
+		1BF656AC27AA9714008FAE81 /* Controller.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Controller.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,18 +85,87 @@
 		1B045E53276B3DE40072CAAB /* distributed_content_builder */ = {
 			isa = PBXGroup;
 			children = (
-				1B045E80276B9A5F0072CAAB /* Agent.cpp */,
-				1B045E81276B9A5F0072CAAB /* Agent.hpp */,
-				1B045E7D276B98920072CAAB /* Queue.cpp */,
-				1B045E7E276B98920072CAAB /* Queue.hpp */,
+				1BF2845227ABDC8E0094A6DF /* Content */,
+				1BF656AA27AA96F7008FAE81 /* Controller */,
+				1BF656A527AA7DBC008FAE81 /* Logger */,
+				1BF656A427AA7DA7008FAE81 /* Network */,
+				1BF656A327AA7D85008FAE81 /* Queue */,
+				1BF656A227AA7D75008FAE81 /* Agent */,
+				1BF6569D27AA7A2C008FAE81 /* Interfaces */,
 				1B045E54276B3DE40072CAAB /* main.cpp */,
-				1B9B2C152798A63300E60AD2 /* Interfaces.h */,
-				1B4C36302798BB0B00F2BDE4 /* TestNetwork.cpp */,
-				1B4C36312798BB0B00F2BDE4 /* TestNetwork.hpp */,
-				1B8178412798C3AC00DB442B /* Logger.cpp */,
-				1B8178422798C3AC00DB442B /* Logger.hpp */,
 			);
 			path = distributed_content_builder;
+			sourceTree = "<group>";
+		};
+		1BF2845227ABDC8E0094A6DF /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				1BF2845327ABDCB00094A6DF /* TestContent.cpp */,
+				1BF2845427ABDCB00094A6DF /* TestContent.hpp */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
+		1BF6569D27AA7A2C008FAE81 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				1B9B2C152798A63300E60AD2 /* Interfaces.h */,
+				1BF6569E27AA7A80008FAE81 /* ITask.h */,
+				1BF6569F27AA7B05008FAE81 /* IQueue.h */,
+				1BF656A027AA7BC8008FAE81 /* ILogger.h */,
+				1BF656A127AA7CA5008FAE81 /* INetwork.h */,
+				1BF656A727AA8EC7008FAE81 /* IController.h */,
+				1BF656A827AA92CD008FAE81 /* IContent.h */,
+				1BF656A927AA93D1008FAE81 /* IRemoteAgent.h */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		1BF656A227AA7D75008FAE81 /* Agent */ = {
+			isa = PBXGroup;
+			children = (
+				1B045E80276B9A5F0072CAAB /* Agent.cpp */,
+				1B045E81276B9A5F0072CAAB /* Agent.hpp */,
+				1BF2844F27ABC4210094A6DF /* RemoteAgent.cpp */,
+				1BF2845027ABC4210094A6DF /* RemoteAgent.hpp */,
+			);
+			path = Agent;
+			sourceTree = "<group>";
+		};
+		1BF656A327AA7D85008FAE81 /* Queue */ = {
+			isa = PBXGroup;
+			children = (
+				1B045E7D276B98920072CAAB /* Queue.cpp */,
+				1B045E7E276B98920072CAAB /* Queue.hpp */,
+			);
+			path = Queue;
+			sourceTree = "<group>";
+		};
+		1BF656A427AA7DA7008FAE81 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				1B4C36302798BB0B00F2BDE4 /* TestNetwork.cpp */,
+				1B4C36312798BB0B00F2BDE4 /* TestNetwork.hpp */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		1BF656A527AA7DBC008FAE81 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				1B8178422798C3AC00DB442B /* MacLogger.hpp */,
+				1BF656A627AA7E09008FAE81 /* UnixLogger.h */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
+		1BF656AA27AA96F7008FAE81 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1BF656AB27AA9714008FAE81 /* Controller.cpp */,
+				1BF656AC27AA9714008FAE81 /* Controller.hpp */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,10 +226,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B045E82276B9A5F0072CAAB /* Agent.cpp in Sources */,
-				1B8178432798C3AC00DB442B /* Logger.cpp in Sources */,
 				1B045E55276B3DE40072CAAB /* main.cpp in Sources */,
+				1BF656AD27AA9714008FAE81 /* Controller.cpp in Sources */,
 				1B4C36322798BB0B00F2BDE4 /* TestNetwork.cpp in Sources */,
 				1B045E7F276B98920072CAAB /* Queue.cpp in Sources */,
+				1BF2845527ABDCB00094A6DF /* TestContent.cpp in Sources */,
+				1BF2845127ABC4210094A6DF /* RemoteAgent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
