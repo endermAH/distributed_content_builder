@@ -7,6 +7,8 @@
 
 #include <vector>
 #include <unistd.h>
+#include <chrono>
+#include <thread>
 
 #include "Controller.hpp"
 #include "RemoteAgent.hpp"
@@ -61,7 +63,7 @@ void Controller::BuildContent(IContent* content) {
                     break;
             }
         }
-        usleep(1000); // TODO: replace with c++ style
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
     time(&end);
     double build_time = difftime(end, start);
