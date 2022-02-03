@@ -13,6 +13,7 @@
 		1B4C36322798BB0B00F2BDE4 /* TestNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C36302798BB0B00F2BDE4 /* TestNetwork.cpp */; };
 		1BF2845127ABC4210094A6DF /* RemoteAgent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1BF2844F27ABC4210094A6DF /* RemoteAgent.cpp */; };
 		1BF2845527ABDCB00094A6DF /* TestContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1BF2845327ABDCB00094A6DF /* TestContent.cpp */; };
+		1BF2845827ABEA4F0094A6DF /* DebugController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1BF2845627ABEA4F0094A6DF /* DebugController.cpp */; };
 		1BF656AD27AA9714008FAE81 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1BF656AB27AA9714008FAE81 /* Controller.cpp */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,8 @@
 		1BF2845027ABC4210094A6DF /* RemoteAgent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RemoteAgent.hpp; sourceTree = "<group>"; };
 		1BF2845327ABDCB00094A6DF /* TestContent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestContent.cpp; sourceTree = "<group>"; };
 		1BF2845427ABDCB00094A6DF /* TestContent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TestContent.hpp; sourceTree = "<group>"; };
+		1BF2845627ABEA4F0094A6DF /* DebugController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DebugController.cpp; sourceTree = "<group>"; };
+		1BF2845727ABEA4F0094A6DF /* DebugControllerDecorator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DebugControllerDecorator.hpp; sourceTree = "<group>"; };
 		1BF6569E27AA7A80008FAE81 /* ITask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ITask.h; sourceTree = "<group>"; };
 		1BF6569F27AA7B05008FAE81 /* IQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IQueue.h; sourceTree = "<group>"; };
 		1BF656A027AA7BC8008FAE81 /* ILogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILogger.h; sourceTree = "<group>"; };
@@ -164,6 +167,8 @@
 			children = (
 				1BF656AB27AA9714008FAE81 /* Controller.cpp */,
 				1BF656AC27AA9714008FAE81 /* Controller.hpp */,
+				1BF2845627ABEA4F0094A6DF /* DebugController.cpp */,
+				1BF2845727ABEA4F0094A6DF /* DebugControllerDecorator.hpp */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -232,6 +237,7 @@
 				1B045E7F276B98920072CAAB /* Queue.cpp in Sources */,
 				1BF2845527ABDCB00094A6DF /* TestContent.cpp in Sources */,
 				1BF2845127ABC4210094A6DF /* RemoteAgent.cpp in Sources */,
+				1BF2845827ABEA4F0094A6DF /* DebugController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

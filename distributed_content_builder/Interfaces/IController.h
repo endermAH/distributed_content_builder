@@ -8,6 +8,8 @@
 #ifndef IController_h
 #define IController_h
 
+#include <vector>
+
 #include "IContent.h"
 #include "IRemoteAgent.h"
 #include "ILogger.h"

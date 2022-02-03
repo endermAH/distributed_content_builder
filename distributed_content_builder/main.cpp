@@ -12,6 +12,7 @@
 #include "MacLogger.hpp"
 #include "Controller.hpp"
 #include "TestContent.hpp"
+#include "DebugControllerDecorator.hpp"
 
 const int kAgentCount = 16; // Wat if we have more than 22 nodes?
 const int kBuildSize = 50;
@@ -21,13 +22,15 @@ int main(int argc, const char * argv[]) {
     
     MacLogger* logger = new MacLogger();
     Controller* controller = new Controller(logger);
+    DebugControllerDecorator* d_controller = new DebugControllerDecorator(controller);
     TestContent* content = new TestContent(kBuildSize);
+    
     
     double time[kTestsCount];
     double summ = 0;
     for(int i = 0; i < kTestsCount; i++) {
 //        time[i] = controller->BuildContent(kBuildSize);
-        controller->BuildContent(content);
+        d_controller->BuildContent(content);
 //        summ += time[i];
     }
     

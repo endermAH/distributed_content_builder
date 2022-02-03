@@ -40,8 +40,7 @@ void Controller::BuildContent(IContent* content) {
     
     Queue* queue = new Queue(1, 10, content->GetSize(), logger_);
     TestNetwork* network = new TestNetwork(logger_);
-    time_t start, end;
-    time(&start);
+    
     while (!queue->AllTasksComplete()) {
         for (int i = 0; i < agent_list.size(); i++) {
             IRemoteAgent* agent = agent_list[i];
@@ -65,8 +64,5 @@ void Controller::BuildContent(IContent* content) {
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
-    time(&end);
-    double build_time = difftime(end, start);
-    logger_->LogSuccess("Build time: " + std::to_string(build_time) + "s");
 //    return build_time;
 };
