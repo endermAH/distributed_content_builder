@@ -20,16 +20,7 @@ Controller::Controller(ILogger *logger, INetwork *network) {
 };
 
 std::vector<IRemoteAgent*> Controller::GetAvailableAgents() {
-    
-    // TODO: Use Network to get available agents
-    
-    int count_ = 3;
-    std::vector<IRemoteAgent*> remote_agents;
-    for(int i = 0; i < count_; i++){
-        remote_agents.push_back(new RemoteAgent(i));
-    }
-
-    return remote_agents;
+    return network_->GetAvailableAgents();
 };
 
 void Controller::BuildContent(IContent* content) {

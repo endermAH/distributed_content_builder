@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <string>
+#include <vector>
 
 #include "Interfaces.h"
 #include "ILogger.h"
@@ -22,9 +23,20 @@ class Agent;
 class TestNetwork: public INetwork {
 public:
     ILogger* logger_;
+    int agent_count_;
 public:
-    TestNetwork(ILogger *logger)
-        :logger_(logger) {}
+    TestNetwork(ILogger *logger, int agent_count)
+        :logger_(logger)
+        ,agent_count_(agent_count){}
+    
+    std::vector<IRemoteAgent*> GetAvailableAgents() {
+        std::vector<IRemoteAgent*> remote_agents;
+        for(int i = 0; i < agent_count_; i++){
+            remote_agents.push_back(new RemoteAgent(i));
+        }
+        
+        return remote_agents;
+    }
     
     bool SendTaskToRemoteAgent(IRemoteAgent *target_agent, ITask *task) {
         logger_->LogDebug("Sending task to agent[" + std::to_string(target_agent->id_) + "]");

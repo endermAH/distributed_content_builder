@@ -66,7 +66,7 @@ bool Queue::AssignTask(IRemoteAgent* agent){
             task->assigned_agent_ = agent;
             task->status_ = ITask::TaskStatus::TASK_IN_PROGRESS;
             task_assigned = true;
-            TestNetwork* network = new TestNetwork(logger_);
+            TestNetwork* network = new TestNetwork(logger_, 16);
             network->SendTaskToRemoteAgent(agent, task);
             break;
         }

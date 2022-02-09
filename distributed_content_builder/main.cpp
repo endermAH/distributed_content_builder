@@ -22,7 +22,7 @@ const int kTestsCount = 1;
 int main(int argc, const char * argv[]) {
     
     MacLogger* logger = new MacLogger();
-    TestNetwork* network = new TestNetwork(logger);
+    TestNetwork* network = new TestNetwork(logger, kAgentCount);
     Controller* controller = new Controller(logger, network);
     DebugControllerDecorator* d_controller = new DebugControllerDecorator(controller);
     TestContent* content = new TestContent(kBuildSize);

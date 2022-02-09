@@ -12,6 +12,7 @@
 
 class INetwork {
 public:
+    virtual std::vector<IRemoteAgent*> GetAvailableAgents() = 0;
     virtual bool SendTaskToRemoteAgent(IRemoteAgent *target_agent, ITask *task) = 0;
     virtual IRemoteAgent::AgentStatus CheckAgentStatus(IRemoteAgent *target_agent) = 0;
     virtual void CollectTaskResult(IRemoteAgent *target_agent) = 0;
