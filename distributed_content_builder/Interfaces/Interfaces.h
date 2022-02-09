@@ -3,7 +3,7 @@
 //  distributed_content_builder
 //
 //  Created by Евгений Курятов on 19.01.2022.
-//
+// 
 
 #ifndef Interfaces_h
 #define Interfaces_h

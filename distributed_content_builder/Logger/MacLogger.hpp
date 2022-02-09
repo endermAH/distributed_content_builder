@@ -19,29 +19,29 @@ public:
     MacLogger() {
     }
     
-    void LogError(std::string&& message) {
+    void PushMessage(LogLevel level, std::string msg) {
+        std::string prefix;
+        switch (level) {
+            case ILogger::LogLevel::Debug:
+                prefix = "🌚: ";
+                break;
+            case ILogger::LogLevel::Info:
+                prefix = "ℹ️: ";
+                break;
+            case ILogger::LogLevel::Success:
+                prefix = "✅: ";
+                break;
+            case ILogger::LogLevel::Warning:
+                prefix = "⚠️: ";
+                break;
+            case ILogger::LogLevel::Error:
+                prefix = "⛔: ";
+                break;
+        }
         std::string message_;
-        message_ = "❌: " + message;
+        message_ = prefix + msg;
         std::cout << message_ << std::endl;
-    };
-    
-    void LogSuccess(std::string&& message) {
-        std::string message_;
-        message_ = "⚡: " + message;
-        std::cout << message_ << std::endl;
-    };
-    
-    void LogWarning(std::string&& message) {
-        std::string message_;
-        message_ = "⚠️: " + message;
-        std::cout << message_ << std::endl;
-    };
-    
-    void LogInfo(std::string&& message) {
-        std::string message_;
-        message_ = "ℹ️: " + message;
-        std::cout << message_ << std::endl;
-    };
+    }
 };
 
 #endif /* Logger_hpp */

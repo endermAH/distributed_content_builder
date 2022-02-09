@@ -23,29 +23,29 @@ public:
     UnixLogger() {
     }
     
-    void LogError(std::string&& message) {
+    void PushMessage(LogLevel level, std::string msg) {
+        std::string prefix;
+        switch (level) {
+            case ILogger::LogLevel::Debug:
+                prefix = "[DEBUG]: ";
+                break;
+            case ILogger::LogLevel::Info:
+                prefix = "[INFO]: ";
+                break;
+            case ILogger::LogLevel::Success:
+                prefix = GREEN + "[SUCCESS]: ";
+                break;
+            case ILogger::LogLevel::Warning:
+                prefix = YELLOW + "[WARNING]: ";
+                break;
+            case ILogger::LogLevel::Error:
+                prefix = RED + "[ERROR]: ";
+                break;
+        }
         std::string message_;
-        message_ = RED + "[INFO]: " + message + RESET;
+        message_ = prefix + msg + RESET;
         std::cout << message_ << std::endl;
-    };
-    
-    void LogSuccess(std::string&& message) {
-        std::string message_;
-        message_ = GREEN + "[SUCCESS]: " + message + RESET;
-        std::cout << message_ << std::endl;
-    };
-    
-    void LogWarning(std::string&& message) {
-        std::string message_;
-        message_ = YELLOW + "[ERROR]: " + message + RESET;
-        std::cout << message_ << std::endl;
-    };
-    
-    void LogInfo(std::string&& message) {
-        std::string message_;
-        message_ = "[INFO]: " + message;
-        std::cout << message_ << std::endl;
-    };
+    }
 };
 
 #endif /* UnixLogger_h */

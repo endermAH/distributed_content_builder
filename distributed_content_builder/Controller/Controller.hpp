@@ -14,7 +14,7 @@
 
 class Controller : public IController {
 public:
-    Controller(ILogger *logger);
+    Controller(ILogger *logger, INetwork* network);
     std::vector<IRemoteAgent*> GetAvailableAgents();
     void BuildContent(IContent* content);
 };

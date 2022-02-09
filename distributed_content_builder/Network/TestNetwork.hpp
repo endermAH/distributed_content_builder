@@ -27,7 +27,7 @@ public:
         :logger_(logger) {}
     
     bool SendTaskToRemoteAgent(IRemoteAgent *target_agent, ITask *task) {
-        logger_->LogInfo("Sending task to agent[" + std::to_string(target_agent->id_) + "]");
+        logger_->LogDebug("Sending task to agent[" + std::to_string(target_agent->id_) + "]");
         target_agent->DoTask(task);
         return true;
     }

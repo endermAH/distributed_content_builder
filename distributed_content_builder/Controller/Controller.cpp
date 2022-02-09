@@ -13,11 +13,10 @@
 #include "Controller.hpp"
 #include "RemoteAgent.hpp"
 #include "Queue.hpp"
-#include "MacLogger.hpp"
-#include "TestNetwork.hpp"
 
-Controller::Controller(ILogger *logger) {
+Controller::Controller(ILogger *logger, INetwork *network) {
     logger_ = logger;
+    network_ = network;
 };
 
 std::vector<IRemoteAgent*> Controller::GetAvailableAgents() {
@@ -39,16 +38,15 @@ void Controller::BuildContent(IContent* content) {
     // TODO: move Content splitting to IContent
     
     Queue* queue = new Queue(1, 10, content->GetSize(), logger_);
-    TestNetwork* network = new TestNetwork(logger_);
     
     while (!queue->AllTasksComplete()) {
         for (int i = 0; i < agent_list.size(); i++) {
             IRemoteAgent* agent = agent_list[i];
-            IRemoteAgent::AgentStatus status = network->CheckAgentStatus(agent);
+            IRemoteAgent::AgentStatus status = network_->CheckAgentStatus(agent);
             switch ( status )
             {
                 case IRemoteAgent::AgentStatus::STATE_TASK_COMPLETE:
-                    network->CollectTaskResult(agent);
+                    network_->CollectTaskResult(agent);
                     queue->AssignTask(agent);
                     break;
                 case IRemoteAgent::AgentStatus::STATE_AVAILABLE:
