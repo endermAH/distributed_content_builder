@@ -63,7 +63,7 @@ bool Queue::AssignTask(IRemoteAgent* agent){
     for(int i = 0; i < task_count_; i++) {
         task = task_list_[i];
         if (task->GetStatus() == ITask::TaskStatus::TASK_READY_FOR_BUILD || task->GetStatus() == ITask::TaskStatus::TASK_FAILED) {
-            task->assigned_agent_ = agent;
+//            task->assigned_agent_ = agent;
             task->status_ = ITask::TaskStatus::TASK_IN_PROGRESS;
             task_assigned = true;
             TestNetwork* network = new TestNetwork(logger_, 16);

@@ -14,8 +14,15 @@
 
 class Controller : public IController {
 public:
+    std::vector<ITask*> task_list_;
+public:
     Controller(ILogger *logger, INetwork* network);
+    
     std::vector<IRemoteAgent*> GetAvailableAgents();
+    
+    bool AssignTask(IRemoteAgent* agent);
+    bool AllTasksComplete();
+    
     void BuildContent(IContent* content);
 };
 

@@ -34,7 +34,7 @@ public:
         PushMessage(Warning, message);
     };
     
-    void LogError(std::string message) {
+    void LogError(std::string&& message) {
         PushMessage(Error, message);
     };
 };

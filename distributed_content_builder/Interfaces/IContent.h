@@ -8,8 +8,13 @@
 #ifndef IContent_h
 #define IContent_h
 
+#include <vector>
+
+#include "ITask.h"
+
 class IContent {
 public:
     virtual int GetSize() = 0;
+    virtual std::vector<ITask*> GetTasks() = 0;
 };
 #endif /* IContent_h */

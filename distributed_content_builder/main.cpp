@@ -14,6 +14,7 @@
 #include "TestContent.hpp"
 #include "DebugControllerDecorator.hpp"
 #include "TestNetwork.hpp"
+#include "TestContent.hpp"
 
 const int kAgentCount = 16; // Wat if we have more than 22 nodes?
 const int kBuildSize = 50;
@@ -23,9 +24,9 @@ int main(int argc, const char * argv[]) {
     
     MacLogger* logger = new MacLogger();
     TestNetwork* network = new TestNetwork(logger, kAgentCount);
+    TestContent* content = new TestContent(1, 10, kBuildSize, logger);
     Controller* controller = new Controller(logger, network);
     DebugControllerDecorator* d_controller = new DebugControllerDecorator(controller);
-    TestContent* content = new TestContent(kBuildSize);
     
     
 //    double time[kTestsCount];
