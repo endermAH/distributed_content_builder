@@ -41,6 +41,7 @@
 		1B4C36312798BB0B00F2BDE4 /* TestNetwork.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TestNetwork.hpp; sourceTree = "<group>"; };
 		1B63FAE127B3F39300761873 /* TestTask.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestTask.cpp; sourceTree = "<group>"; };
 		1B63FAE227B3F39300761873 /* TestTask.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TestTask.hpp; sourceTree = "<group>"; };
+		1B63FAE727B5293300761873 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1B8178422798C3AC00DB442B /* MacLogger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MacLogger.hpp; sourceTree = "<group>"; };
 		1B9B2C152798A63300E60AD2 /* Interfaces.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interfaces.h; sourceTree = "<group>"; };
 		1BF2844F27ABC4210094A6DF /* RemoteAgent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RemoteAgent.cpp; sourceTree = "<group>"; };
@@ -75,6 +76,7 @@
 		1B045E48276B3DE40072CAAB = {
 			isa = PBXGroup;
 			children = (
+				1B63FAE727B5293300761873 /* README.md */,
 				1B045E53276B3DE40072CAAB /* distributed_content_builder */,
 				1B045E52276B3DE40072CAAB /* Products */,
 			);
