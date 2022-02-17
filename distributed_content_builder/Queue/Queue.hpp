@@ -11,9 +11,9 @@
 #include <stdio.h>
 #include <vector>
 
-#include "IRemoteAgent.h"
-#include "IQueue.h"
-#include "ILogger.h"
+#include "IRemoteAgent.hpp"
+#include "IQueue.hpp"
+#include "ILogger.hpp"
 #include "TestTask.hpp"
 
 class Agent;

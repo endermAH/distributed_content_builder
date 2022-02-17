@@ -10,6 +10,7 @@
 #include <thread>
 
 #include "MacLogger.hpp"
+#include "UnixLogger.hpp"
 #include "Controller.hpp"
 #include "TestContent.hpp"
 #include "DebugControllerDecorator.hpp"
@@ -22,7 +23,7 @@ const int kTestsCount = 1;
 
 int main(int argc, const char * argv[]) {
     
-    MacLogger* logger = new MacLogger();
+    UnixLogger* logger = new UnixLogger();
     TestNetwork* network = new TestNetwork(logger, kAgentCount);
     TestContent* content = new TestContent(1, 10, kBuildSize, logger);
     Controller* controller = new Controller(logger, network);

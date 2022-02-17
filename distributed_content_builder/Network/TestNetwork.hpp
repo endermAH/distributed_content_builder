@@ -12,10 +12,10 @@
 #include <string>
 #include <vector>
 
-#include "Interfaces.h"
-#include "ILogger.h"
-#include "INetwork.h"
-#include "IRemoteAgent.h"
+#include "Interfaces.hpp"
+#include "ILogger.hpp"
+#include "INetwork.hpp"
+#include "IRemoteAgent.hpp"
 #include "RemoteAgent.hpp"
 
 class Agent;

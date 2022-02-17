@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 
-#include "IController.h"
+#include "IController.hpp"
 
 class Controller : public IController {
 public:

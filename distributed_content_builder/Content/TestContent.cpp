@@ -10,7 +10,7 @@
 #include <string>
 
 #include "TestContent.hpp"
-#include "ILogger.h"
+#include "ILogger.hpp"
 #include "TestTask.hpp"
 
 std::vector<ITask*> TestContent::GetTasks() {

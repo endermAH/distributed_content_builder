@@ -12,7 +12,7 @@
 #include <chrono>
 #include <string>
 
-#include "IController.h"
+#include "IController.hpp"
 
 class DebugControllerDecorator : public IController {
 protected:

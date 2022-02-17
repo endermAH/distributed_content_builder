@@ -10,8 +10,8 @@
 
 #include <stdio.h>
 #include <iostream>
-#include "Interfaces.h"
-#include "ILogger.h"
+#include "Interfaces.hpp"
+#include "ILogger.hpp"
 
 class UnixLogger: public ILogger {
 private:

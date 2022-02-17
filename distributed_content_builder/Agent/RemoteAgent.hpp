@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 
-#include "IRemoteAgent.h"
+#include "IRemoteAgent.hpp"
 
 class RemoteAgent: public IRemoteAgent {
 

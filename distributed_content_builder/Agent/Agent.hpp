@@ -9,7 +9,7 @@
 #define Agent_hpp
 
 #include <stdio.h>
-#include "Interfaces.h"
+#include "Interfaces.hpp"
 #include "MacLogger.hpp"
 
 class Queue;

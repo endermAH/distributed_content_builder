@@ -10,10 +10,10 @@
 
 #include <vector>
 
-#include "IContent.h"
-#include "IRemoteAgent.h"
-#include "ILogger.h"
-#include "INetwork.h"
+#include "IContent.hpp"
+#include "IRemoteAgent.hpp"
+#include "ILogger.hpp"
+#include "INetwork.hpp"
 
 class IController {
 public:

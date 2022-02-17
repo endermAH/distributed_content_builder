@@ -9,7 +9,7 @@
 #define Interfaces_h
 
 #include <string>
-#include "ITask.h"
+#include "ITask.hpp"
 
 
 // TODO: Split IAgent to IHost and IRemoteAgent

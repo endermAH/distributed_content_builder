@@ -8,7 +8,7 @@
 #ifndef IRemoteAgent_h
 #define IRemoteAgent_h
 
-#include "ITask.h"
+#include "ITask.hpp"
 
 class IRemoteAgent {
 public:

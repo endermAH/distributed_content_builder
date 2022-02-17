@@ -9,7 +9,7 @@
 #define TestTask_hpp
 
 #include <stdio.h>
-#include "IRemoteAgent.h"
+#include "IRemoteAgent.hpp"
 
 class Task: public ITask {
 public:

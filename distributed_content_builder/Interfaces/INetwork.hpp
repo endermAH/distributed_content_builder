@@ -8,7 +8,7 @@
 #ifndef INetwork_h
 #define INetwork_h
 
-#include "IRemoteAgent.h"
+#include "IRemoteAgent.hpp"
 
 class INetwork {
 public:

@@ -8,7 +8,7 @@
 #ifndef IQueue_h
 #define IQueue_h
 
-#include "IRemoteAgent.h"
+#include "IRemoteAgent.hpp"
 
 class IQueue {
 public:

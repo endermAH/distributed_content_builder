@@ -10,8 +10,8 @@
 
 #include <stdio.h>
 
-#include "IContent.h"
-#include "ILogger.h"
+#include "IContent.hpp"
+#include "ILogger.hpp"
 
 class TestContent : public IContent {
 public:
