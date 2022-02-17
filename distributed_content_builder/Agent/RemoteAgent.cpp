@@ -21,9 +21,12 @@ RemoteAgent::RemoteAgent(int id) {
 
 void RemoteAgent::DoTask(ITask* job) {
     // TODO: implement DoTask using INetwork
+
     auto payload = [](ITask* job, RemoteAgent* agent){
         agent->state_ = AgentStatus::STATE_BUSY;
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000 * job->GetSize()));
+        job->GetPayload();
+//        std::this_thread::sleep_for(std::chrono::milliseconds(1000 * job->GetSize()));
+//        std::system("../../../tools/compress_file.py ");
         job->SetStatus(ITask::TaskStatus::TASK_DONE);
         agent->state_ = AgentStatus::STATE_TASK_COMPLETE;
     };

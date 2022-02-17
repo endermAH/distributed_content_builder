@@ -8,8 +8,6 @@
 #ifndef ITask_h
 #define ITask_h
 
-//#include "IRemoteAgent.h"
-
 class ITask {
 public:
     enum class TaskStatus: char {
@@ -22,6 +20,7 @@ public:
     virtual TaskStatus GetStatus() = 0;
     virtual void SetStatus(TaskStatus new_status) = 0;
     virtual int GetSize() = 0;
+    virtual void GetPayload() = 0;
 };
 
 #endif /* ITask_h */

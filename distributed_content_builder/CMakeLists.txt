@@ -29,7 +29,9 @@ include_directories(./Network/)
 include_directories(./Queue/)
 include_directories(./Task/)
 
+
 # Add source to this project's executable.
 add_executable (distributed_content_builder ${HEADERS} ${SOURCE} )
+add_dependencies(distributed_content_builder rapidjson)
 
 # TODO: Add tests and install targets if needed.

@@ -22,7 +22,7 @@ Queue::Queue(int count, ILogger* logger)
     task_count_ = count;
     
     for(int i = 0; i < count; i++) {
-        task_list_.push_back(new Task(1));
+        task_list_.push_back(new TestTask(1));
     }
 }
 
@@ -45,7 +45,7 @@ Queue::Queue(int min, int max, int count, ILogger* logger)
     task_count_++;
     
     for(int i = 0; i < task_count_; i++) {
-        task_list_.push_back(new Task(task_sizes_[i]));
+        task_list_.push_back(new TestTask(task_sizes_[i]));
     }
     
     std::cout << "Jobs to do: \n";
@@ -58,7 +58,7 @@ Queue::Queue(int min, int max, int count, ILogger* logger)
 }
 
 bool Queue::AssignTask(IRemoteAgent* agent){
-    Task* task;
+    TestTask* task;
     bool task_assigned = false;
     for(int i = 0; i < task_count_; i++) {
         task = task_list_[i];

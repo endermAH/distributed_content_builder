@@ -33,7 +33,7 @@ std::vector<ITask*> TestContent::GetTasks() {
     task_count_++;
     
     for(int i = 0; i < task_count_; i++) {
-        task_list_.push_back(new Task(task_sizes_[i]));
+        task_list_.push_back(new TestTask(task_sizes_[i]));
     }
     
     std::string tasks_string;

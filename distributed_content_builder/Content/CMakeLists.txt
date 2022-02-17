@@ -8,11 +8,13 @@ include_directories(./../Interfaces/)
 set(HEADERS
         ${HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/TestContent.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Content.hpp
         PARENT_SCOPE
         )
 
 set(SOURCE
         ${SOURCE}
         ${CMAKE_CURRENT_SOURCE_DIR}/TestContent.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Content.cpp
         PARENT_SCOPE
         )

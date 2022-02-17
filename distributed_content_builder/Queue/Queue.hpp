@@ -21,7 +21,7 @@ class Agent;
 class Queue: public IQueue {
 public:
     ILogger* logger_;
-    std::vector<Task*> task_list_;
+    std::vector<TestTask*> task_list_;
     int task_count_;
     
 public:

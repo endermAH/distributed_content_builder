@@ -13,19 +13,19 @@
 #include "UnixLogger.hpp"
 #include "Controller.hpp"
 #include "TestContent.hpp"
+#include "Content.hpp"
 #include "DebugControllerDecorator.hpp"
 #include "TestNetwork.hpp"
-#include "TestContent.hpp"
 
-const int kAgentCount = 16; // Wat if we have more than 22 nodes?
-const int kBuildSize = 50;
+const int kAgentCount = 5; // Wat if we have more than 22 nodes?
+const int kBuildSize = 100;
 const int kTestsCount = 1;
 
-int main(int argc, const char * argv[]) {
+int main() {
     
     UnixLogger* logger = new UnixLogger();
     TestNetwork* network = new TestNetwork(logger, kAgentCount);
-    TestContent* content = new TestContent(1, 10, kBuildSize, logger);
+    Content* content = new Content(logger, "/Volumes/Samsung_T5/ITMO.Studying/1.1/SPERASOFT/distributed_content_builder/test_content");
     Controller* controller = new Controller(logger, network);
     DebugControllerDecorator* d_controller = new DebugControllerDecorator(controller);
     

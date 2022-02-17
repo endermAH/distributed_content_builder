@@ -27,9 +27,8 @@ Agent::Agent(int id, int count){
 void Agent::DoTask(ITask* job) {
     auto payload = [](ITask* job, Agent* agent){
         agent->state_ = AgentStatus::STATE_BUSY;
-//        printf("[%d] Task started (%d)\n", agent->identity_, job->GetSize());
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000 * job->GetSize()));
-//        printf("[%d] Task finished\n", agent->identity_);
+        std::system("pwd");
+//        std::this_thread::sleep_for(std::chrono::milliseconds(1000 * job->GetSize()));
         job->SetStatus(ITask::TaskStatus::TASK_DONE);
         agent->state_ = AgentStatus::STATE_TASK_COMPLETE;
     };
