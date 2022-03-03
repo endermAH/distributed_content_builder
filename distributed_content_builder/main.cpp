@@ -25,7 +25,7 @@ int main() {
     
     UnixLogger* logger = new UnixLogger();
     TestNetwork* network = new TestNetwork(logger, kAgentCount);
-    Content* content = new Content(logger, "/Volumes/Samsung_T5/ITMO.Studying/1.1/SPERASOFT/distributed_content_builder/test_content");
+    Content* content = new Content(logger, "/Users/evgenijkuratov/CLionProjects/distributed_content_builder/test_content");
     Controller* controller = new Controller(logger, network);
     DebugControllerDecorator* d_controller = new DebugControllerDecorator(controller);
     
