@@ -1,5 +1,5 @@
 {
   "file": "tex_4.png",
-  "executor": "/Volumes/Samsung_T5/ITMO.Studying/1.1/SPERASOFT/distributed_content_builder/tools/compress_file.py",
+  "executor": "/Users/evgenijkuratov/CLionProjects/distributed_content_builder/tools/compress_file.py",
   "parameters": ""
 }

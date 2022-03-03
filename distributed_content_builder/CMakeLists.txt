@@ -11,6 +11,7 @@ set(SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
         )
 
+
 add_subdirectory ("Agent")
 add_subdirectory ("Content")
 add_subdirectory ("Controller")
@@ -29,9 +30,17 @@ include_directories(./Network/)
 include_directories(./Queue/)
 include_directories(./Task/)
 
+set(OPENSSL_ROOT_DIR "/usr/local/opt/openssl")
+#set(OPENSSL_CRYPTO_LIBRARY "/usr/local/opt/openssl/lib")
+add_compile_options("-L /usr/local/opt/openssl/lib")
+set(OPENSSL_INCLUDE_DIR "/usr/local/opt/openssl/include")
+set(OPENSSL_USE_STATIC_LIBS TRUE)
+find_package(OpenSSL REQUIRED)
 
 # Add source to this project's executable.
-add_executable (distributed_content_builder ${HEADERS} ${SOURCE} )
+
+add_executable (distributed_content_builder ${HEADERS} ${SOURCE})
+target_link_libraries(${PROJECT_NAME} OpenSSL::Crypto)
 add_dependencies(distributed_content_builder rapidjson)
 
 # TODO: Add tests and install targets if needed.

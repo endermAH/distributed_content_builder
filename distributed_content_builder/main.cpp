@@ -16,13 +16,27 @@
 #include "Content.hpp"
 #include "DebugControllerDecorator.hpp"
 #include "TestNetwork.hpp"
+#include <openssl/sha.h>
+
+#include <stdio.h>
+#include <string.h>
 
 const int kAgentCount = 5; // Wat if we have more than 22 nodes?
 const int kBuildSize = 100;
 const int kTestsCount = 1;
 
 int main() {
-    
+    unsigned char ibuf[] = "compute sha1";
+    unsigned char obuf[20];
+
+    SHA1(ibuf, std::strlen((char*)ibuf), obuf);
+
+    int i;
+    for (i = 0; i < 20; i++) {
+        printf("%02x ", obuf[i]);
+    }
+    printf("\n");
+
     UnixLogger* logger = new UnixLogger();
     TestNetwork* network = new TestNetwork(logger, kAgentCount);
     Content* content = new Content(logger, "/Users/evgenijkuratov/CLionProjects/distributed_content_builder/test_content");
