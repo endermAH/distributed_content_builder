@@ -5,6 +5,7 @@ cmake_minimum_required (VERSION 3.8)
 
 set(HEADERS
         ${HEADERS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/IHashManager.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/IContent.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/IController.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ILogger.hpp

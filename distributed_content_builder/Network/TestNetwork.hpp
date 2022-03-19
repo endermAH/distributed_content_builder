@@ -32,14 +32,14 @@ public:
     std::vector<IRemoteAgent*> GetAvailableAgents() {
         std::vector<IRemoteAgent*> remote_agents;
         for(int i = 0; i < agent_count_; i++){
-            remote_agents.push_back(new RemoteAgent(i));
+            remote_agents.push_back(new RemoteAgent(i, "../../test_content/agents/"));
         }
         
         return remote_agents;
     }
     
     bool SendTaskToRemoteAgent(IRemoteAgent *target_agent, ITask *task) {
-        logger_->LogDebug("Sending task to agent[" + std::to_string(target_agent->id_) + "]");
+        logger_->LogDebug("[Network]: Sending task to agent[" + std::to_string(target_agent->id_) + "]");
         target_agent->DoTask(task);
         return true;
     }
@@ -51,5 +51,18 @@ public:
     void CollectTaskResult(IRemoteAgent *target_agent){
         return;
     }
+
+    std::vector<std::string> CollectExistingFiles(std::vector<std::string> content_hashes, std::vector<IRemoteAgent*> agents){
+        std::vector<std::string> existing_hashes;
+        for (IRemoteAgent* agent : agents) {
+            std::vector<std::string> existing_agent_hashes = agent->CheckHashes(content_hashes);
+            for (auto hash: existing_agent_hashes) {
+                if (std::find(existing_hashes.begin(), existing_hashes.end(), hash) == existing_hashes.end()){
+                    existing_hashes.push_back(hash);
+                }
+            }
+        }
+        return existing_hashes;
+    };
 };
 #endif /* TestNetwork_hpp */

@@ -8,13 +8,13 @@ include_directories(./../Interfaces/)
 set(HEADERS
         ${HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/TestTask.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/Task.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/TaskCompress.hpp
         PARENT_SCOPE
         )
 
 set(SOURCE
         ${SOURCE}
         ${CMAKE_CURRENT_SOURCE_DIR}/TestTask.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/Task.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/TaskCompress.cpp
         PARENT_SCOPE
         )

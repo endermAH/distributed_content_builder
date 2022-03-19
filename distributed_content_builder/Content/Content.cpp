@@ -9,7 +9,7 @@
 #include <fstream>
 
 #include "Content.hpp"
-#include "Task.hpp"
+#include "TaskCompress.hpp"
 #include "rapidjson/document.h"
 #include <rapidjson/istreamwrapper.h>
 
@@ -22,7 +22,7 @@ std::vector<ITask*> Content::GetTasks(){
     std::vector<ITask*> task_list_;
     std::string path = content_path_;
 
-    logger_->LogDebug("List of textures to build: ");
+    logger_->LogDebug("[Content]: List of textures to build: ");
     for (const auto & entry : fs::directory_iterator(path))
         if (entry.path().extension() == ".json") {
             rapidjson::Document json_data;
@@ -32,14 +32,13 @@ std::vector<ITask*> Content::GetTasks(){
             std::string file_string;
 
             json_data.ParseStream(isw);
-            logger_->LogDebug(entry.path());
-            logger_->LogDebug(json_data["file"].GetString());
+            logger_->LogDebug("[Content]: " + entry.path().string());
+//            logger_->LogDebug("[Content]: " + json_data["file"].GetString());
 
             std::string path_to_file = entry.path().parent_path().string() + "/" + json_data["file"].GetString();
             std::string path_to_compressed = entry.path().parent_path().string() + "/ready/" + json_data["file"].GetString();
-            std::string params = path_to_file + " " + path_to_compressed;
 
-            task_list_.push_back(new Task(json_data["executor"].GetString(), params));
+            task_list_.push_back(new TaskCompress(json_data["executor"].GetString(), path_to_file));
         }
     return task_list_;
 }

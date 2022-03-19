@@ -13,10 +13,12 @@
 #include "IRemoteAgent.hpp"
 
 class RemoteAgent: public IRemoteAgent {
-
 public:
-    RemoteAgent(int id);
+    std::string base_directory_;
+public:
+    RemoteAgent(int id, std::string base_dir);
     void DoTask(ITask* job);
+    std::vector<std::string> CheckHashes(std::vector<std::string> hashes);
 };
 
 #endif /* RemoteAgent_hpp */

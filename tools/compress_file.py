@@ -5,7 +5,7 @@ import sys
 import random
 import time
 
-time.sleep(random.randint(10,100))
+# time.sleep(random.randint(10,100))
 
 args = sys.argv
 path_original = args[1]

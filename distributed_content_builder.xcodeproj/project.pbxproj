@@ -95,7 +95,7 @@
 		1B045E53276B3DE40072CAAB /* distributed_content_builder */ = {
 			isa = PBXGroup;
 			children = (
-				1B63FAE427B3F39A00761873 /* Task */,
+				1B63FAE427B3F39A00761873 /* TaskCompress */,
 				1BF2845227ABDC8E0094A6DF /* Content */,
 				1BF656AA27AA96F7008FAE81 /* Controller */,
 				1BF656A527AA7DBC008FAE81 /* Logger */,
@@ -108,13 +108,13 @@
 			path = distributed_content_builder;
 			sourceTree = "<group>";
 		};
-		1B63FAE427B3F39A00761873 /* Task */ = {
+		1B63FAE427B3F39A00761873 /* TaskCompress */ = {
 			isa = PBXGroup;
 			children = (
 				1B63FAE127B3F39300761873 /* TestTask.cpp */,
 				1B63FAE227B3F39300761873 /* TestTask.hpp */,
 			);
-			path = Task;
+			path = TaskCompress;
 			sourceTree = "<group>";
 		};
 		1BF2845227ABDC8E0094A6DF /* Content */ = {

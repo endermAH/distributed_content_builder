@@ -33,7 +33,7 @@ public:
         return size_;
     }
 
-    void GetPayload() {
+    void Do(std::string result_dir) {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000 * GetSize()));
     }
 };

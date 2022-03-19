@@ -13,7 +13,7 @@
 #include "MacLogger.hpp"
 
 class Queue;
-class Task;
+class TaskCompress;
 
 class Agent: public IAgent {
 public:

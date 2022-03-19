@@ -19,6 +19,7 @@ class IController {
 public:
     ILogger *logger_;
     INetwork *network_;
+    IHashManager *hash_manager_;
 public:
     virtual std::vector<IRemoteAgent*> GetAvailableAgents() = 0;
     virtual void BuildContent(IContent* content) = 0;

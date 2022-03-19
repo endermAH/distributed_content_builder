@@ -16,11 +16,14 @@ public:
     int size_;
 //    IRemoteAgent* assiged_agent_;
     TaskStatus status_;
+    std::string result_path_;
+    std::string file_path_;
+    std::string file_hash_;
 public:
     virtual TaskStatus GetStatus() = 0;
     virtual void SetStatus(TaskStatus new_status) = 0;
     virtual int GetSize() = 0;
-    virtual void GetPayload() = 0;
+    virtual void Do(std::string result_dir) = 0;
 };
 
 #endif /* ITask_h */

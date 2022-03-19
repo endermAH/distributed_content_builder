@@ -12,11 +12,20 @@ HashList::HashList(ILogger *logger) {
 
 HashList::HashList(std::string path, ILogger *logger) {
     logger_ = logger;
-    std::ifstream infile(path);
-    std::string result_path, hash;
-    while (infile >> result_path >> hash)
-    {
-        hash_list_.push_back(FileHash(hash, result_path));
+    if (std::filesystem::exists(path)) {
+        logger_->LogDebug("[HashList]: Reading hashfile: " + path);
+        std::ifstream infile(path);
+        std::string result_path, hash;
+        while (infile >> result_path >> hash) {
+            hash_list_.push_back(FileHash(hash, result_path));
+        }
+        hashfile_path_ = path;
+        infile.close();
+    } else {
+        std::ofstream ofile(path);
+        ofile.close();
+        hashfile_path_ = path;
+        logger_->LogDebug("[HashList]: Created file " + path);
     }
 }
 

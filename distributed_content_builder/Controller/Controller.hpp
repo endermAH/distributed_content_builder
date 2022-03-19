@@ -16,7 +16,7 @@ class Controller : public IController {
 public:
     std::vector<ITask*> task_list_;
 public:
-    Controller(ILogger *logger, INetwork* network);
+    Controller(ILogger *logger, INetwork* network, IHashManager* hash_manager);
     
     std::vector<IRemoteAgent*> GetAvailableAgents();
     
