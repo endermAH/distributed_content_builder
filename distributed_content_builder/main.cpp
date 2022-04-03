@@ -30,6 +30,8 @@ const int kTestsCount = 1;
 
 int main() {
 
+    std::srand(std::time(nullptr));
+
     auto* logger = new UnixLogger();
     auto* hash_manager = new HashManager(logger);
     auto* network = new TestNetwork(logger, kAgentCount);
