@@ -68,7 +68,7 @@ void Controller::BuildContent(IContent* content) {
             switch ( status )
             {
                 case IRemoteAgent::AgentStatus::STATE_TASK_COMPLETE:
-                    network_->CollectTaskResult(agent);
+//                    network_->CollectTaskResult(agent);
                     AssignTask(agent);
                     break;
                 case IRemoteAgent::AgentStatus::STATE_AVAILABLE:

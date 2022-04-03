@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include <filesystem>
+#include <thread>
 
 #include "Interfaces.hpp"
 #include "ILogger.hpp"
@@ -19,6 +21,9 @@
 #include "RemoteAgent.hpp"
 
 class Agent;
+
+const float human_connection_speed = 0.1; // In mb/s
+const float connection_speed = (human_connection_speed * 1024 * 1024 * 8) / 1000; // In bit/ms
 
 class TestNetwork: public INetwork {
 public:
@@ -39,7 +44,22 @@ public:
     }
     
     bool SendTaskToRemoteAgent(IRemoteAgent *target_agent, ITask *task) {
-        logger_->LogDebug("[Network]: Sending task to agent[" + std::to_string(target_agent->id_) + "]");
+        auto copy_from = std::filesystem::path(task->file_path_);
+        auto copy_to = std::filesystem::path(target_agent->base_directory_)/"raw"/copy_from.filename();
+
+        auto file_size = std::filesystem::file_size(copy_from);
+        long time_to_sleep = file_size / connection_speed;
+
+        logger_->LogDebug("[Network]: Sending " + copy_from.filename().string() + " to agent[" + std::to_string(target_agent->id_) + "]"
+            "\n --- File size: " + std::to_string(file_size ) + " bit "
+            "\n --- Time to sleep: " + std::to_string(time_to_sleep ) + " ms"
+            "\n --- Network speed: " + std::to_string(connection_speed ) + " bit/ms"
+        );
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(time_to_sleep));
+        std::filesystem::copy(copy_from, copy_to);
+        logger_->LogSuccess("[Network]: Successfully sent " + copy_from.filename().string() + " to agent[" + std::to_string(target_agent->id_) + "] at " + std::to_string(float(time_to_sleep) / 1000) + "s");
+        task->file_path_ = copy_to.string();
         target_agent->DoTask(task);
         return true;
     }
@@ -48,8 +68,22 @@ public:
         return target_agent->state_;
     }
     
-    void CollectTaskResult(IRemoteAgent *target_agent){
-        return;
+    void SendTaskResult(IRemoteAgent *target_agent, ITask *task){
+        auto copy_to = std::filesystem::path(std::filesystem::path("../../test_content/ready"));
+        auto copy_from =  std::filesystem::path(target_agent->base_directory_)/"ready"/std::filesystem::path(task->file_path_).filename();
+
+        auto file_size = std::filesystem::file_size(copy_from);
+        long time_to_sleep = file_size / connection_speed;
+
+        logger_->LogDebug("[Network]: Collecting " + copy_from.filename().string() + " from agent[" + std::to_string(target_agent->id_) + "]"
+            "\n --- File size: " + std::to_string(file_size ) + " bit "
+            "\n --- Time to sleep: " + std::to_string(time_to_sleep ) + " ms"
+            "\n --- Network speed: " + std::to_string(connection_speed ) + " bit/ms"
+        );
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(time_to_sleep));
+        logger_->LogSuccess("[Network]: Successfully collected "  + copy_from.filename().string() + " from agent[" + std::to_string(target_agent->id_) + "] at " + std::to_string(float(time_to_sleep) / 1000) + "s");
+        std::filesystem::copy(copy_from, copy_to);
     }
 
     std::vector<std::string> CollectExistingFiles(std::vector<std::string> content_hashes, std::vector<IRemoteAgent*> agents){

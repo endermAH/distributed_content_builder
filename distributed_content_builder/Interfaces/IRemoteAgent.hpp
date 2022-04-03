@@ -22,6 +22,7 @@ public:
     int id_;
     ILogger* logger_;
     IHashManager* hash_manager_;
+    std::string base_directory_;
 public:
     virtual void DoTask(ITask* job) = 0;
     virtual std::vector<std::string> CheckHashes(std::vector<std::string> hashes) = 0;

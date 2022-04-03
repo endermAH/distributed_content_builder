@@ -23,7 +23,7 @@
 #include "TestNetwork.hpp"
 #include "HashManager.hpp"
 
-const int kAgentCount = 5; // Wat if we have more than 22 nodes?
+const int kAgentCount = 3; // Wat if we have more than 22 nodes?
 const int kBuildSize = 100;
 const int kTestsCount = 1;
 

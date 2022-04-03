@@ -17,7 +17,7 @@
 #include "HashManager.hpp"
 #include "UnixLogger.hpp"
 #include "HashList.hpp"
-
+#include "TestNetwork.hpp"
 
 #include <cstdlib>
 #include <iostream>
@@ -28,6 +28,8 @@ RemoteAgent::RemoteAgent(int id, std::string base_dir) {
     state_ = AgentStatus::STATE_AVAILABLE;
     base_directory_ = std::filesystem::absolute(base_dir).string() + "/RemoteAgent" + std::to_string(id);
     std::string dir_struct_to_create = base_directory_ + "/ready";
+    std::filesystem::create_directories(dir_struct_to_create);
+    dir_struct_to_create = base_directory_ + "/raw";
     std::filesystem::create_directories(dir_struct_to_create);
 
     // TODO: use IHashManager and ILogger
@@ -47,6 +49,9 @@ void RemoteAgent::DoTask(ITask* task) {
         HashList hash_list = HashList(agent->base_directory_ + "/hash.list", agent->logger_);
         hash_list.AddHash(task->file_hash_, task->result_path_);
         hash_list.Save();
+
+        TestNetwork* network = new TestNetwork(agent->logger_, 0);
+        network->SendTaskResult(agent, task);
 
         agent->state_ = AgentStatus::STATE_TASK_COMPLETE;
     };
