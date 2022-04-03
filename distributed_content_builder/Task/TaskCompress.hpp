@@ -44,11 +44,9 @@ public:
         auto file_path = std::filesystem::path(file_path_);
         result_path_ = result_dir + "/" + file_path.filename().string();
         std::string exec_command = executor_ + " " + file_path_ + " " + result_path_;
-//        std::system(exec_command.c_str());
         FILE* test = popen(exec_command.c_str(), "r");
         pclose(test);
 
-//        std::this_thread::sleep_for(std::chrono::milliseconds(1000 * 2));
     }
 
 //    std::string GetResultPath() {

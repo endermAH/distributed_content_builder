@@ -44,15 +44,9 @@ void RemoteAgent::DoTask(ITask* task) {
         task->Do(agent->base_directory_ + "/ready");
         task->SetStatus(ITask::TaskStatus::TASK_DONE);
 
-//        std::string file_hash = agent->hash_manager_->GenerateFileHash(task->result_path_);
-
-         // use current time as seed for random generator
-
-//        agent->logger_->LogDebug("[Agent " + std::to_string(agent->id_) + "]" + " sleepped " + std::to_string(random_variable));
-
-//        auto hash_list = HashList(agent->base_directory_ + "/hash.list", agent->logger_);
-//        hash_list.AddHash(task->file_hash_, task->result_path_);
-//        hash_list.Save();
+        HashList hash_list = HashList(agent->base_directory_ + "/hash.list", agent->logger_);
+        hash_list.AddHash(task->file_hash_, task->result_path_);
+        hash_list.Save();
 
         agent->state_ = AgentStatus::STATE_TASK_COMPLETE;
     };
