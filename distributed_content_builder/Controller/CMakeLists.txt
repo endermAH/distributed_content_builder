@@ -14,7 +14,7 @@ set(SOURCE
 
 set(HEADERS
         ${HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/DebugControllerDecorator.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/MetricsControllerDecorator.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Controller.hpp
         PARENT_SCOPE
         )

@@ -22,8 +22,8 @@
 
 class Agent;
 
-const float human_connection_speed = 0.1; // In mb/s
-const float connection_speed = (human_connection_speed * 1024 * 1024 * 8) / 1000; // In bit/ms
+const float human_connection_speed = 1; // In mb/s
+const float connection_speed = (human_connection_speed * 1024 * 1024) / 1000; // In byte/ms
 
 class TestNetwork: public INetwork {
 public:
@@ -51,9 +51,9 @@ public:
         long time_to_sleep = file_size / connection_speed;
 
         logger_->LogDebug("[Network]: Sending " + copy_from.filename().string() + " to agent[" + std::to_string(target_agent->id_) + "]"
-            "\n --- File size: " + std::to_string(file_size ) + " bit "
+            "\n --- File size: " + std::to_string(file_size ) + " byte "
             "\n --- Time to sleep: " + std::to_string(time_to_sleep ) + " ms"
-            "\n --- Network speed: " + std::to_string(connection_speed ) + " bit/ms"
+            "\n --- Network speed: " + std::to_string(connection_speed ) + " byte/ms"
         );
 
         std::this_thread::sleep_for(std::chrono::milliseconds(time_to_sleep));
@@ -76,9 +76,9 @@ public:
         long time_to_sleep = file_size / connection_speed;
 
         logger_->LogDebug("[Network]: Collecting " + copy_from.filename().string() + " from agent[" + std::to_string(target_agent->id_) + "]"
-            "\n --- File size: " + std::to_string(file_size ) + " bit "
+            "\n --- File size: " + std::to_string(file_size ) + " byte "
             "\n --- Time to sleep: " + std::to_string(time_to_sleep ) + " ms"
-            "\n --- Network speed: " + std::to_string(connection_speed ) + " bit/ms"
+            "\n --- Network speed: " + std::to_string(connection_speed ) + " byte/ms"
         );
 
         std::this_thread::sleep_for(std::chrono::milliseconds(time_to_sleep));
@@ -103,7 +103,7 @@ public:
 
                     logger_->LogDebug("[Network]: Collecting from" + copy_from.string() + " to " + copy_to.string());
                     logger_->LogDebug("[Network]: Collecting " + copy_from.filename().string() + " from agent[" + std::to_string(agent->id_) + "]"
-                        "\n --- File size: " + std::to_string(file_size ) + " bit "
+                        "\n --- File size: " + std::to_string(file_size ) + " byte "
                         "\n --- Time to sleep: " + std::to_string(time_to_sleep ) + " ms"
                         "\n --- Network speed: " + std::to_string(connection_speed ) + " bit/ms"
                     );

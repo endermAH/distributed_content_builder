@@ -19,7 +19,7 @@
 #include "Controller.hpp"
 #include "TestContent.hpp"
 #include "Content.hpp"
-#include "DebugControllerDecorator.hpp"
+#include "MetricsControllerDecorator.hpp"
 #include "TestNetwork.hpp"
 #include "HashManager.hpp"
 
@@ -37,7 +37,7 @@ int main() {
     auto* network = new TestNetwork(logger, kAgentCount);
     auto* content = new Content(logger, "../../test_content");
     auto* controller = new Controller(logger, network, hash_manager);
-    auto* d_controller = new DebugControllerDecorator(controller);
+    auto* d_controller = new MetricsControllerDecorator(controller);
 
 //    std::vector<std::string> content_hashes = {"4df9723f643893b5575cf55fd18ea34c"};
 //    logger->LogInfo(std::to_string(content_hashes.size()));
