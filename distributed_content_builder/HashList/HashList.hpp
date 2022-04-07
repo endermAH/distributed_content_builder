@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <filesystem>
 
 #include "ILogger.hpp"
 
@@ -18,6 +19,12 @@ public:
     FileHash(std::string file_hash, std::string file_path)
         : file_hash_(std::move(file_hash))
         , file_path_(std::move(file_path)){};
+
+    bool operator==(const FileHash& rhs){
+        bool hashes_equal = file_hash_ == rhs.file_hash_;
+        bool files_equal = std::filesystem::path(file_path_).filename() == std::filesystem::path(rhs.file_path_).filename();
+        return hashes_equal && files_equal;
+    }
 };
 
 class HashList {

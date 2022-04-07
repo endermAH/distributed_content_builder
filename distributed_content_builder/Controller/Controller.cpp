@@ -29,34 +29,28 @@ void Controller::BuildContent(IContent* content) {
     task_list_ = content->GetTasks();
 
     // TODO: Move to UpdateTaskListWithExistsng
-    std::vector<std::string> content_hashes;
+    std::vector<FileHash> content_hashes;
     for (auto* task :  task_list_){
-        content_hashes.push_back(hash_manager_->GenerateFileHash(task->file_path_));
+        FileHash content_hash = FileHash(hash_manager_->GenerateFileHash(task->file_path_), task->file_path_);
+        content_hashes.push_back(content_hash);
     }
 
     logger_->LogDebug("[Controller]: Content hashes: ");
     for (auto hash: content_hashes) {
-        logger_->LogDebug(hash.c_str());
+        logger_->LogDebug(hash.file_path_.c_str());
     }
 
-    std::vector<std::string> existing_hashes = network_->CollectExistingFiles(content_hashes, agent_list);
+    std::vector<FileHash> existing_hashes = network_->CollectExistingFiles(content_hashes, agent_list);
 
-    logger_->LogDebug("[Controller]: Existing hashes: ");
+    logger_->LogDebug("[Controller]: Existing files: ");
     for (auto hash: existing_hashes) {
-        logger_->LogDebug(hash.c_str());
+        logger_->LogDebug(hash.file_path_.c_str());
     }
 
-    std::vector<std::string> hashes_to_build;
-    for (auto hash : content_hashes){
-        if(std::find(existing_hashes.begin(), existing_hashes.end(), hash) == existing_hashes.end()){
-            hashes_to_build.push_back(hash);
-        }
-    }
-
+    logger_->LogDebug("[Controller]: Removing tasks");
     for (int i = task_list_.size()-1; i >= 0; i--) {
-        std::string task_hash = task_list_[i]->file_hash_;
-        if(!(std::find(existing_hashes.begin(), existing_hashes.end(), task_hash) == existing_hashes.end())){
-
+        FileHash task_file_hash = FileHash(task_list_[i]->file_hash_, task_list_[i]->file_path_);
+        if (std::find(existing_hashes.begin(), existing_hashes.end(), task_file_hash) != existing_hashes.end()) {
             task_list_.erase(task_list_.begin() + i);
         }
     }
@@ -68,7 +62,6 @@ void Controller::BuildContent(IContent* content) {
             switch ( status )
             {
                 case IRemoteAgent::AgentStatus::STATE_TASK_COMPLETE:
-//                    network_->CollectTaskResult(agent);
                     AssignTask(agent);
                     break;
                 case IRemoteAgent::AgentStatus::STATE_AVAILABLE:
@@ -84,7 +77,6 @@ void Controller::BuildContent(IContent* content) {
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
-//    return build_time;
 }
 
 bool Controller::AssignTask(IRemoteAgent* agent){
@@ -93,7 +85,6 @@ bool Controller::AssignTask(IRemoteAgent* agent){
     for(int i = 0; i < task_list_.size(); i++) {
         task = task_list_[i];
         if (task->GetStatus() == ITask::TaskStatus::TASK_READY_FOR_BUILD || task->GetStatus() == ITask::TaskStatus::TASK_FAILED) {
-//            task->assigned_agent_ = agent;
             task->status_ = ITask::TaskStatus::TASK_IN_PROGRESS;
             task_assigned = true;
             network_->SendTaskToRemoteAgent(agent, task);

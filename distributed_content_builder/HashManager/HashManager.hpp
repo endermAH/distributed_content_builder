@@ -14,7 +14,7 @@ public:
     ILogger* logger_;
 public:
     HashManager(ILogger* logger):logger_(logger){};
-    std::vector<std::string> GetArtifactsFromHashlist(HashList* local_hashes, std::vector<std::string> requested_hashes);
+    std::vector<FileHash> GetArtifactsFromHashlist(HashList* local_hashes, std::vector<FileHash> requested_hashes);
     std::string GenerateFileHash(std::string path);
 private:
     std::string StringFromBuffer(unsigned char* md);

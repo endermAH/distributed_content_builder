@@ -17,7 +17,7 @@ public:
     ILogger *logger_;
 //    INetwork *network_;
 public:
-    virtual std::vector<std::string> GetArtifactsFromHashlist(HashList* local_hashes, std::vector<std::string> requested_hashes) = 0;
+    virtual std::vector<FileHash> GetArtifactsFromHashlist(HashList* local_hashes, std::vector<FileHash> requested_hashes) = 0;
     virtual std::string GenerateFileHash(std::string path) = 0;
 
 };

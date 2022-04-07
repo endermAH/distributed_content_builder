@@ -16,7 +16,7 @@ class RemoteAgent: public IRemoteAgent {
 public:
     RemoteAgent(int id, std::string base_dir);
     void DoTask(ITask* job);
-    std::vector<std::string> CheckHashes(std::vector<std::string> hashes);
+    std::vector<FileHash> CheckHashes(std::vector<FileHash> hashes);
 };
 
 #endif /* RemoteAgent_hpp */

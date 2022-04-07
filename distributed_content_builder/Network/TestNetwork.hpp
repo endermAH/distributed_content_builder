@@ -86,16 +86,35 @@ public:
         std::filesystem::copy(copy_from, copy_to);
     }
 
-    std::vector<std::string> CollectExistingFiles(std::vector<std::string> content_hashes, std::vector<IRemoteAgent*> agents){
-        std::vector<std::string> existing_hashes;
+    std::vector<FileHash> CollectExistingFiles(std::vector<FileHash> content_hashes, std::vector<IRemoteAgent*> agents){
+        std::vector<FileHash> existing_hashes;
         for (IRemoteAgent* agent : agents) {
-            std::vector<std::string> existing_agent_hashes = agent->CheckHashes(content_hashes);
+            std::vector<FileHash> existing_agent_hashes = agent->CheckHashes(content_hashes);
+            for (auto hash : existing_agent_hashes) {
+                logger_->LogDebug("[Network]: Found " + std::filesystem::path(hash.file_path_).filename().string() + " on agent[" + std::to_string(agent->id_) + "]");
+            }
             for (auto hash: existing_agent_hashes) {
                 if (std::find(existing_hashes.begin(), existing_hashes.end(), hash) == existing_hashes.end()){
                     existing_hashes.push_back(hash);
+                    auto copy_from = std::filesystem::path(agent->base_directory_)/"ready"/std::filesystem::path(hash.file_path_).filename();
+                    auto copy_to = std::filesystem::path(std::filesystem::path("../../test_content/ready"));
+                    auto file_size = std::filesystem::file_size(copy_from);
+                    long time_to_sleep = file_size / connection_speed;
+
+                    logger_->LogDebug("[Network]: Collecting from" + copy_from.string() + " to " + copy_to.string());
+                    logger_->LogDebug("[Network]: Collecting " + copy_from.filename().string() + " from agent[" + std::to_string(agent->id_) + "]"
+                        "\n --- File size: " + std::to_string(file_size ) + " bit "
+                        "\n --- Time to sleep: " + std::to_string(time_to_sleep ) + " ms"
+                        "\n --- Network speed: " + std::to_string(connection_speed ) + " bit/ms"
+                    );
+
+                    std::this_thread::sleep_for(std::chrono::milliseconds(time_to_sleep));
+                    logger_->LogSuccess("[Network]: Successfully collected "  + copy_from.filename().string() + " from agent[" + std::to_string(agent->id_) + "] at " + std::to_string(float(time_to_sleep) / 1000) + "s");
+                    std::filesystem::copy(copy_from, copy_to);
                 }
             }
         }
+
         return existing_hashes;
     };
 };

@@ -59,7 +59,7 @@ void RemoteAgent::DoTask(ITask* task) {
     thread.detach();
 }
 
-std::vector<std::string> RemoteAgent::CheckHashes(std::vector<std::string> hashes) {
+std::vector<FileHash> RemoteAgent::CheckHashes(std::vector<FileHash> hashes) {
     auto* hash_list = new HashList(base_directory_ + "/hash.list", logger_);
     return hash_manager_->GetArtifactsFromHashlist(hash_list, hashes);
 }

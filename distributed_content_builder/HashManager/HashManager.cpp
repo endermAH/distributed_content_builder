@@ -10,15 +10,13 @@
 #include "HashManager.hpp"
 #include "HashList.hpp"
 
-std::vector<std::string> HashManager::GetArtifactsFromHashlist(HashList* local_hashes, std::vector<std::string> requested_hashes){
-    std::vector<std::string> existing_files;
-    for (const std::string& hash : requested_hashes) {
-        for (const FileHash& file : local_hashes->hash_list_){
-            if (file.file_hash_ == hash) {
-                existing_files.push_back(file.file_hash_);
-                logger_->LogDebug("[HashManager]: Found on agent: \n-- File: " + file.file_path_ + "\n-- Hash: " + file.file_hash_);
-                break;
-            }
+std::vector<FileHash> HashManager::GetArtifactsFromHashlist(HashList* local_hashes, std::vector<FileHash> requested_hashes){
+    std::vector<FileHash> existing_files;
+    for (auto hash : requested_hashes) {
+        std::vector<FileHash> local_file_hashes = local_hashes->hash_list_;
+        auto result = std::find(local_file_hashes.begin(), local_file_hashes.end(), hash);
+        if(result != local_file_hashes.end()){
+            existing_files.push_back(*result);
         }
     }
     return existing_files;
@@ -47,7 +45,7 @@ std::string HashManager::StringFromBuffer(unsigned char* md) {
     for(int i=0; i < MD5_DIGEST_LENGTH; i++) {
 
         int size_s = std::snprintf( nullptr, 0, "%02x", md[i] ) + 1; // Extra space for '\0'
-        if( size_s <= 0 ){ logger_->LogError( "Error during formatting." ); }
+        if( size_s <= 0 ){ logger_->LogError( "[HashManager]: Error during formatting." ); }
         auto size = static_cast<size_t>( size_s );
         std::unique_ptr<char[]> buf( new char[ size ] );
         std::snprintf( buf.get(), size, "%02x", md[i] );
