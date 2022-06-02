@@ -14,10 +14,11 @@
 #include "RemoteAgent.hpp"
 #include "Queue.hpp"
 
-Controller::Controller(ILogger *logger, INetwork *network, IHashManager *hash_manager) {
+Controller::Controller(ILogger *logger, INetwork *network, IHashManager *hash_manager, std::filesystem::path result_dir) {
     logger_ = logger;
     network_ = network;
     hash_manager_ = hash_manager;
+    result_dir_ = result_dir;
 };
 
 std::vector<IRemoteAgent*> Controller::GetAvailableAgents() {
@@ -26,21 +27,9 @@ std::vector<IRemoteAgent*> Controller::GetAvailableAgents() {
 
 void Controller::BuildContent(IContent* content) {
     std::vector<IRemoteAgent*> agent_list = GetAvailableAgents();
-    task_list_ = content->GetTasks();
+    task_list_ = content->GetTasks(result_dir_);
 
-    // TODO: Move to UpdateTaskListWithExistsng
-    std::vector<FileHash> content_hashes;
-    for (auto* task :  task_list_){
-        FileHash content_hash = FileHash(hash_manager_->GenerateFileHash(task->file_path_), task->file_path_);
-        content_hashes.push_back(content_hash);
-    }
-
-    logger_->LogDebug("[Controller]: Content hashes: ");
-    for (auto hash: content_hashes) {
-        logger_->LogDebug(hash.file_path_.c_str());
-    }
-
-    std::vector<FileHash> existing_hashes = network_->CollectExistingFiles(content_hashes, agent_list);
+    std::vector<FileHash> existing_hashes = network_->CollectExistingFiles(task_list_, agent_list, result_dir_);
 
     logger_->LogDebug("[Controller]: Existing files: ");
     for (auto hash: existing_hashes) {
@@ -81,6 +70,7 @@ void Controller::BuildContent(IContent* content) {
 
 bool Controller::AssignTask(IRemoteAgent* agent){
     ITask* task;
+    agent->state_ = IRemoteAgent::AgentStatus::STATE_BUSY;
     bool task_assigned = false;
     for(int i = 0; i < task_list_.size(); i++) {
         task = task_list_[i];

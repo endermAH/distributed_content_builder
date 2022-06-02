@@ -28,7 +28,7 @@ public:
         return size_;
     }
 
-    std::vector<ITask*> GetTasks();
+    std::vector<ITask*> GetTasks(std::filesystem::path result_dir);
 };
 
 

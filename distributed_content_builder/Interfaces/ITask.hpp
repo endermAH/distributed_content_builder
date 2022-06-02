@@ -19,6 +19,8 @@ public:
     std::string result_path_;
     std::string file_path_;
     std::string file_hash_;
+    std::string file_name_;
+    std::string controller_result_path_;
 public:
     virtual TaskStatus GetStatus() = 0;
     virtual void SetStatus(TaskStatus new_status) = 0;

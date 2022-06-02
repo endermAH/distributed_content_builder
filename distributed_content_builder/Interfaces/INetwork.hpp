@@ -16,7 +16,7 @@ public:
     virtual bool SendTaskToRemoteAgent(IRemoteAgent *target_agent, ITask *task) = 0;
     virtual IRemoteAgent::AgentStatus CheckAgentStatus(IRemoteAgent *target_agent) = 0;
     virtual void SendTaskResult(IRemoteAgent *target_agent, ITask *task) = 0;
-    virtual std::vector<FileHash> CollectExistingFiles(std::vector<FileHash> content_hashes, std::vector<IRemoteAgent*> agents) = 0;
+    virtual std::vector<FileHash> CollectExistingFiles(std::vector<ITask*> task_list, std::vector<IRemoteAgent*> agents, std::filesystem::path result_dir) = 0;
 };
 
 #endif /* INetwork_h */

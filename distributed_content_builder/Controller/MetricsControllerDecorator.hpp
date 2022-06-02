@@ -33,7 +33,7 @@ public:
         controller_->logger_->LogSuccess("Build time: " + std::to_string(build_time.count()) + "s");
 //        controller_->logger_->LogDebug("Folder size: " + std::filesystem::file_size("../../test_content/agents"));
         size_t cash_size = 0;
-        for (auto dir_entry : std::filesystem::recursive_directory_iterator("../../test_content/agents"))
+        for (auto dir_entry : std::filesystem::recursive_directory_iterator("../../test_directory/agents"))
         {
             if (!std::filesystem::is_directory(dir_entry)) {
                 cash_size += dir_entry.file_size();

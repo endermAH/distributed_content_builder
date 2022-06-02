@@ -41,18 +41,18 @@ void RemoteAgent::DoTask(ITask* task) {
     // TODO: implement DoTask using INetwork
 
     auto payload = [](ITask* task, RemoteAgent* agent){
-        agent->state_ = AgentStatus::STATE_BUSY;
 
         task->Do(agent->base_directory_ + "/ready");
-        task->SetStatus(ITask::TaskStatus::TASK_DONE);
 
         HashList hash_list = HashList(agent->base_directory_ + "/hash.list", agent->logger_);
         hash_list.AddHash(task->file_hash_, task->result_path_);
         hash_list.Save();
 
-        TestNetwork* network = new TestNetwork(agent->logger_, 0);
+        std::vector<IRemoteAgent*> remote_agents;
+        TestNetwork* network = new TestNetwork(agent->logger_, remote_agents);
         network->SendTaskResult(agent, task);
 
+        task->SetStatus(ITask::TaskStatus::TASK_DONE);
         agent->state_ = AgentStatus::STATE_TASK_COMPLETE;
     };
     std::thread thread(payload, task, this);
@@ -61,5 +61,6 @@ void RemoteAgent::DoTask(ITask* task) {
 
 std::vector<FileHash> RemoteAgent::CheckHashes(std::vector<FileHash> hashes) {
     auto* hash_list = new HashList(base_directory_ + "/hash.list", logger_);
+//    logger_->LogDebug("[Agent-" + std::to_string(id_) + "]: Hashes count: " + std::to_string(hash_list->Length()));
     return hash_manager_->GetArtifactsFromHashlist(hash_list, hashes);
 }

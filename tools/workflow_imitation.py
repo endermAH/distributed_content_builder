@@ -9,7 +9,7 @@ import math
 
 # PROJECT DEFAULTS
 PROJECT_ROOT = "test_files"
-PROJECT_ITERATIONS_COUNT = 10
+PROJECT_ITERATIONS_COUNT = 1
 PROJECT_FILE_CHANGE_RATE = 50  # From 0 to 100
 PROJECT_FILE_CREATION_RATE = 20
 PROJECT_EXECUTOR_PATH = "/Users/evgenijkuratov/CLionProjects/distributed_content_builder/tools/compress_file.py"
@@ -121,6 +121,10 @@ def print_array(array, title):
 if __name__ == "__main__":
     total_files_created = []
     total_files_changed = []
+
+    if sys.argv[1]:
+        PROJECT_ROOT = sys.argv[1]
+
     for i in range(PROJECT_ITERATIONS_COUNT):
         print("### ITERATION №%s" % i)
         abs_root_path = pathlib.Path(PROJECT_ROOT).absolute()
@@ -142,7 +146,8 @@ if __name__ == "__main__":
         total_files_changed.extend(changed_files)
         print_array(created_files, "Files created:")
         total_files_created.extend(created_files)
-        print("\n")
+        # print("\n")
 
-    print_array(total_files_created, "Total files created:")
+    if len(total_files_created) > 0:
+        print_array(total_files_created, "Total files created:")
 

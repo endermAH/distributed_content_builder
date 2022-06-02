@@ -9,12 +9,13 @@
 #define IContent_h
 
 #include <vector>
+#include <filesystem>
 
 #include "ITask.hpp"
 
 class IContent {
 public:
     virtual int GetSize() = 0;
-    virtual std::vector<ITask*> GetTasks() = 0;
+    virtual std::vector<ITask*> GetTasks(std::filesystem::path result_dir) = 0;
 };
 #endif /* IContent_h */

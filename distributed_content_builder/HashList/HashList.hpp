@@ -22,7 +22,7 @@ public:
 
     bool operator==(const FileHash& rhs){
         bool hashes_equal = file_hash_ == rhs.file_hash_;
-        bool files_equal = std::filesystem::path(file_path_).filename() == std::filesystem::path(rhs.file_path_).filename();
+        bool files_equal = true; //std::filesystem::path(file_path_).filename() == std::filesystem::path(rhs.file_path_).filename();
         return hashes_equal && files_equal;
     }
 };
