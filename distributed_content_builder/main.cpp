@@ -26,7 +26,7 @@
 
 const int kAgentCount = 3; // Wat if we have more than 22 nodes?
 const int kBuildSize = 100;
-const int kTestsCount = 1;
+const int kTestsCount = 3;
 const std::filesystem::path kTestContentPath = std::filesystem::path("../../test_content");
 const std::string kWorkflowExecutor = "/Users/evgenijkuratov/CLionProjects/distributed_content_builder/tools/workflow_imitation.py";
 const bool kRecreateDir = false;
@@ -52,6 +52,11 @@ int main(int argc, char *argv[]) {
         }
     }
     // === READ OPTIONS
+
+    std::filesystem::path file_path("../../test_directory/metrics.csv");
+    std::ofstream metrics_file(file_path);
+    metrics_file << "Finish time" << ";" << "Duration" << ";" << "Average cash size" << std::endl;
+    metrics_file.close();
 
     std::vector<IRemoteAgent*> remote_agents;
     for(int i = 0; i < agent_count; i++){
@@ -81,22 +86,23 @@ int main(int argc, char *argv[]) {
         auto* d_controller = new MetricsControllerDecorator(controller);
         agent_controllers.push_back(d_controller);
     }
-    
-    for (int i = 0; i < agent_contents.size(); i++){
-        std::string exec_command = "python " + kWorkflowExecutor + " " + agent_contents[i]->content_path_;
-        logger->LogInfo("[SIMULATION] Updating project in: " + agent_contents[i]->content_path_);
-        std::system(exec_command.c_str());
-    }
 
     logger->LogInfo("[SIMULATION] Start builds");
     std::vector<std::thread*> threads;
 
-    for (int i = 0; i < 1; i++){// agent_contents.size()
-        auto payload = [](IController* controller, IContent* content, int i){
-            std::this_thread::sleep_for(std::chrono::seconds(i + std::rand()/((RAND_MAX + 1u)/10)));
-            controller->BuildContent(content);
+    for (int i = 0; i < agent_contents.size(); i++){// agent_contents.size()
+        logger->LogInfo("[SIMULATION] Start simulation for agent[" + std::to_string(i) + "]");
+        auto payload = [](IController* controller, Content* content, int i, int tests_count){
+            for (int j = 0; j < tests_count; j++) {
+                std::string exec_command = "python " + kWorkflowExecutor + " " + content->content_path_;
+                //controller->logger_->LogInfo("[SIMULATION] Updating project in: " + content->content_path_);
+                FILE* test = popen(exec_command.c_str(), "r");
+                pclose(test);
+                std::this_thread::sleep_for(std::chrono::seconds(i + std::rand()/((RAND_MAX + 1u)/10)));
+                controller->BuildContent(content);
+            }
         };
-        threads.push_back(new std::thread(payload, agent_controllers[i], agent_contents[i], i));
+        threads.push_back(new std::thread(payload, agent_controllers[i], agent_contents[i], i, kTestsCount));
     }
 
 
