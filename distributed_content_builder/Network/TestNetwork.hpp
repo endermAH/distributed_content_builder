@@ -62,7 +62,9 @@ public:
         std::filesystem::copy(copy_from, copy_to);
         logger_->LogSuccess("[Network]: Successfully sent " + copy_from.filename().string() + " to agent[" + std::to_string(target_agent->id_) + "] at " + std::to_string(float(time_to_sleep) / 1000) + "s");
         task->file_path_ = copy_to.string();
+        logger_->LogInfo("target_agent->DoTask(task);");
         target_agent->DoTask(task);
+        logger_->LogInfo("target_agent->DoTask(task); Completed");
         return true;
     }
     

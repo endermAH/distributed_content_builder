@@ -32,7 +32,7 @@ public:
         auto end = std::chrono::system_clock::now();
         std::chrono::duration<double> build_time = end - start;
         controller_->logger_->LogSuccess("Build time: " + std::to_string(build_time.count()) + "s");
-//        controller_->logger_->LogDebug("Folder size: " + std::filesystem::file_size("../../test_content/agents"));
+//        controller_->logger_->LogDebug("Folder size: " + std::filesystem::file_size("../../test_content_unix/agents"));
         size_t cash_size = 0;
         for (auto dir_entry : std::filesystem::recursive_directory_iterator("../../test_directory/agents"))
         {

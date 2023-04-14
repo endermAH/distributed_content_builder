@@ -12,7 +12,7 @@ PROJECT_ROOT = "test_files"
 PROJECT_ITERATIONS_COUNT = 1
 PROJECT_FILE_CHANGE_RATE = 50  # From 0 to 100
 PROJECT_FILE_CREATION_RATE = 20
-PROJECT_EXECUTOR_PATH = "/Users/evgenijkuratov/CLionProjects/distributed_content_builder/tools/compress_file.py"
+PROJECT_EXECUTOR_PATH = "C:\\Diploma\\tools\\compress_file.py"
 
 # File change defaults
 MIN_PIXELS_TO_CHANGE = 10000
@@ -30,7 +30,7 @@ def get_random_color():
 
 def change_file(file_path):
     """ Imitate random file change """
-    image = Image.open(file_path)
+    image = Image.open(file_path, 'r')
 
     pixels_to_change = random.randint(MIN_PIXELS_TO_CHANGE, MAX_PIXELS_TO_CHANGE)
     square_width = round(math.sqrt(pixels_to_change))
@@ -60,7 +60,7 @@ def get_project_files(project_root):
         for file in filenames:
             file_path = pathlib.Path(dirpath).joinpath(file)
             if file_path.suffix == ".json":
-                with open(file_path.absolute()) as json_file:
+                with open(file_path.absolute(), 'r') as json_file:
                     file_to_add_str = json.loads(json_file.read())["file"]
                 file_to_add = pathlib.Path(dirpath).joinpath(file_to_add_str)
                 file_to_add_str = file_to_add.absolute()

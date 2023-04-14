@@ -32,12 +32,12 @@ std::vector<ITask*> Content::GetTasks(std::filesystem::path result_dir){
             std::string file_string;
 
             json_data.ParseStream(isw);
-            logger_->LogDebug("[Content]: " + entry.path().string());
+
 
 //            std::string path_to_file = absolute(std::filesystem::path(json_data["file"].GetString())).string();
-            std::string path_to_file = entry.path().parent_path()/json_data["file"].GetString();
-            std::string path_to_compressed = entry.path().parent_path().string() + "/ready/" + json_data["file"].GetString();
-
+            std::string path_to_file = (entry.path().parent_path()/json_data["file"].GetString()).string();
+            std::string path_to_compressed = (entry.path().parent_path()/"ready"/json_data["file"].GetString()).string();
+            logger_->LogDebug("[Content]: " + path_to_file);
             task_list_.push_back(new TaskCompress(json_data["executor"].GetString(), path_to_file, result_dir));
         }
     return task_list_;

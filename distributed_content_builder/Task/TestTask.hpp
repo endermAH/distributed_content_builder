@@ -11,6 +11,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <thread>
+#include <string>
 
 #include "IRemoteAgent.hpp"
 

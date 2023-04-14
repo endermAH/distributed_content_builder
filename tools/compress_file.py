@@ -1,4 +1,4 @@
-#!/usr/local/opt/python/libexec/bin/python
+#!C:\Windows\py.exe
 
 from PIL import Image
 import sys

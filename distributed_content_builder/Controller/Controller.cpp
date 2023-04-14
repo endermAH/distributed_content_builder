@@ -29,6 +29,7 @@ void Controller::BuildContent(IContent* content) {
     std::vector<IRemoteAgent*> agent_list = GetAvailableAgents();
     task_list_ = content->GetTasks(result_dir_);
 
+    logger_->LogDebug("[Controller]: Collecting existing hashes files... ");
     std::vector<FileHash> existing_hashes = network_->CollectExistingFiles(task_list_, agent_list, result_dir_);
 
     logger_->LogDebug("[Controller]: Existing files: ");

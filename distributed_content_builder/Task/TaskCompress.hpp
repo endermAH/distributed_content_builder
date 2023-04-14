@@ -9,6 +9,7 @@
 #include <thread>
 #include <cstdlib>
 #include <filesystem>
+#include <windows.h>
 
 #include "ITask.hpp"
 #include "HashManager.hpp"
@@ -25,8 +26,8 @@ public:
         auto* logger = new UnixLogger();
         auto* hash_manager = new HashManager(logger);
         file_hash_ = hash_manager->GenerateFileHash(file_path);
-        file_name_ = std::filesystem::path(file_path).filename();
-        controller_result_path_ = result_dir/file_name_;
+        file_name_ = std::filesystem::path(file_path).filename().string();
+        controller_result_path_ = (result_dir/file_name_).string();
         size_ = 0;
     }
 
@@ -43,12 +44,16 @@ public:
     }
 
     void Do(std::string result_dir) {
+        std::cout << "Start compression" << std::endl;
         auto file_path = std::filesystem::path(file_path_);
-        result_path_ = result_dir + "/" + file_name_;
-        std::string exec_command = executor_ + " " + file_path_ + " " + result_path_;
-        FILE* test = popen(exec_command.c_str(), "r");
-        pclose(test);
+        result_path_ = (std::filesystem::path(result_dir)/file_name_).string();
+        std::string exec_command = executor_ + " " + file_path.string() + " " + result_path_;
 
+//        FILE* test = popen(exec_command.c_str(), "r");
+//        pclose(test);
+        std::cout << exec_command.c_str() << std::endl;
+//        ShellExecute(NULL, exec_command.c_str(), NULL, NULL, NULL, SW_MAX);
+        system(exec_command.c_str());
     }
 
 //    std::string GetResultPath() {

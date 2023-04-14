@@ -26,10 +26,10 @@
 RemoteAgent::RemoteAgent(int id, std::string base_dir) {
     id_ = id;
     state_ = AgentStatus::STATE_AVAILABLE;
-    base_directory_ = std::filesystem::absolute(base_dir).string() + "/RemoteAgent" + std::to_string(id);
-    std::string dir_struct_to_create = base_directory_ + "/ready";
+    base_directory_ = (std::filesystem::absolute(base_dir)/"RemoteAgent"/std::to_string(id)).string();
+    std::string dir_struct_to_create = (std::filesystem::path(base_directory_)/"ready").string();
     std::filesystem::create_directories(dir_struct_to_create);
-    dir_struct_to_create = base_directory_ + "/raw";
+    dir_struct_to_create = (std::filesystem::path(base_directory_)/"raw").string();
     std::filesystem::create_directories(dir_struct_to_create);
 
     // TODO: use IHashManager and ILogger
@@ -42,9 +42,10 @@ void RemoteAgent::DoTask(ITask* task) {
 
     auto payload = [](ITask* task, RemoteAgent* agent){
 
-        task->Do(agent->base_directory_ + "/ready");
-
-        HashList hash_list = HashList(agent->base_directory_ + "/hash.list", agent->logger_);
+        std::cout << "Start doing task" << std::endl;
+        task->Do((std::filesystem::path(agent->base_directory_)/"ready").string());
+        std::cout << "Finish doing task" << std::endl;
+        HashList hash_list = HashList((std::filesystem::path(agent->base_directory_)/"hash.list").string(), agent->logger_);
         hash_list.AddHash(task->file_hash_, task->result_path_);
         hash_list.Save();
 
@@ -60,7 +61,7 @@ void RemoteAgent::DoTask(ITask* task) {
 }
 
 std::vector<FileHash> RemoteAgent::CheckHashes(std::vector<FileHash> hashes) {
-    auto* hash_list = new HashList(base_directory_ + "/hash.list", logger_);
-//    logger_->LogDebug("[Agent-" + std::to_string(id_) + "]: Hashes count: " + std::to_string(hash_list->Length()));
+    auto* hash_list = new HashList((std::filesystem::path(base_directory_)/"hash.list").string(), logger_);
+    logger_->LogDebug("[Agent-" + std::to_string(id_) + "]: Hashes count: " + std::to_string(hash_list->Length()));
     return hash_manager_->GetArtifactsFromHashlist(hash_list, hashes);
 }

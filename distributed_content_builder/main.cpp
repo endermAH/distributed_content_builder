@@ -8,15 +8,17 @@
 #include <cstdlib>
 
 #include <sys/stat.h>
-#include <sys/mman.h>
+//#include <sys/mman.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <openssl/md5.h>
 #include <getopt.h>
+#include <windows.h>
 
 #include "HashList/HashList.hpp"
 #include "MacLogger.hpp"
 #include "UnixLogger.hpp"
+#include "WinLogger.hpp"
 #include "Controller.hpp"
 #include "TestContent.hpp"
 #include "Content.hpp"
@@ -24,23 +26,23 @@
 #include "TestNetwork.hpp"
 #include "HashManager.hpp"
 
-const int kAgentCount = 3; // Wat if we have more than 22 nodes?
+const int kAgentCount = 1; // Wat if we have more than 22 nodes?
 const int kBuildSize = 100;
 const int kTestsCount = 3;
-const std::filesystem::path kTestContentPath = std::filesystem::path("../../test_content");
-const std::string kWorkflowExecutor = "/Users/evgenijkuratov/CLionProjects/distributed_content_builder/tools/workflow_imitation.py";
-const bool kRecreateDir = false;
+const std::filesystem::path kTestContentPath = std::filesystem::path("..\\..\\test_content_win");
+const std::filesystem::path kWorkflowExecutor = std::filesystem::path(R"(..\..\tools\workflow_imitation.py)");
+const bool kRecreateDir = true;
 
 int main(int argc, char *argv[]) {
     std::srand(std::time(nullptr));
 
     // === DEFAULTS
-    int agent_count = 3;
+    int agent_count = 1;
     std::filesystem::path work_directory = std::filesystem::path("../../test_directory");
     std::filesystem::path agents_root = work_directory/"agents";
     // === DEFAULTS
 
-    auto* logger = new UnixLogger();
+    auto* logger = new WinLogger();
     auto* hash_manager = new HashManager(logger);
 
     // === READ OPTIONS
@@ -70,12 +72,16 @@ int main(int argc, char *argv[]) {
     for (auto* agent : remote_agents) {
         // Prepare content
         std::filesystem::path project_path = std::filesystem::path(agent->base_directory_)/"project";
-
+        logger->LogInfo(agent->base_directory_.c_str());
         if (kRecreateDir) {
             std::filesystem::remove_all(project_path);
-            std::filesystem::create_directory(project_path);
-            std::filesystem::copy(kTestContentPath, project_path);
+            logger->LogInfo("Cleaned...");
+//            std::filesystem::create_directory(project_path);
+//            logger->LogInfo("Created...");
+            std::filesystem::copy(kTestContentPath, project_path, std::filesystem::copy_options::recursive | std::filesystem::copy_options::update_existing);
+            logger->LogInfo("Copied...");
         }
+
 
         auto* content = new Content(logger, project_path.string());
         agent_contents.push_back(content);
@@ -94,11 +100,18 @@ int main(int argc, char *argv[]) {
         logger->LogInfo("[SIMULATION] Start simulation for agent[" + std::to_string(i) + "]");
         auto payload = [](IController* controller, Content* content, int i, int tests_count){
             for (int j = 0; j < tests_count; j++) {
-                std::string exec_command = "python " + kWorkflowExecutor + " " + content->content_path_;
+//                std::cout << "C:\\Windows\\py.exe " + kWorkflowExecutor.string() + " " + content->content_path_ << std::endl;
+//                controller->logger_->LogInfo("[SIMULATION] Constructing string...");
+                std::cout << "[SIMULATION] Constructing string..." << std::endl;
+                std::string exec_command = "C:\\Windows\\py.exe " + kWorkflowExecutor.string() + " " + content->content_path_ + " >> test.out";
                 //controller->logger_->LogInfo("[SIMULATION] Updating project in: " + content->content_path_);
-                FILE* test = popen(exec_command.c_str(), "r");
-                pclose(test);
+//                FILE* test = _popen(exec_command.c_str(), "r");
+//                pclose(test);
+                std::cout << "[SIMULATION] Executing content modification..." << std::endl;
+//                ShellExecute(NULL, exec_command.c_str(), NULL, NULL, NULL, SW_SHOWNORMAL);
+                system(exec_command.c_str());
                 std::this_thread::sleep_for(std::chrono::seconds(i + std::rand()/((RAND_MAX + 1u)/10)));
+                std::cout << "[SIMULATION] Building content..." << std::endl;
                 controller->BuildContent(content);
             }
         };
