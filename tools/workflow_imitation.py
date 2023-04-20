@@ -12,7 +12,7 @@ PROJECT_ROOT = "test_files"
 PROJECT_ITERATIONS_COUNT = 1
 PROJECT_FILE_CHANGE_RATE = 50  # From 0 to 100
 PROJECT_FILE_CREATION_RATE = 20
-PROJECT_EXECUTOR_PATH = "C:\\Diploma\\tools\\compress_file.py"
+PROJECT_EXECUTOR_PATH = r"python C:\Diploma\tools\compress_file.py"
 
 # File change defaults
 MIN_PIXELS_TO_CHANGE = 10000

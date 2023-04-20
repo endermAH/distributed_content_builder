@@ -14,6 +14,7 @@
 #include <openssl/md5.h>
 #include <getopt.h>
 #include <windows.h>
+#include <chrono>
 
 #include "HashList/HashList.hpp"
 #include "MacLogger.hpp"
@@ -25,10 +26,12 @@
 #include "MetricsControllerDecorator.hpp"
 #include "TestNetwork.hpp"
 #include "HashManager.hpp"
+#include "MetricCollector.hpp"
 
-const int kAgentCount = 1; // Wat if we have more than 22 nodes?
+const int kAgentCount = 5; // Wat if we have more than 22 nodes?
 const int kBuildSize = 100;
-const int kTestsCount = 3;
+const int kTestsCount = 1;
+const int kRequestorsCount = 5;
 const std::filesystem::path kTestContentPath = std::filesystem::path("..\\..\\test_content_win");
 const std::filesystem::path kWorkflowExecutor = std::filesystem::path(R"(..\..\tools\workflow_imitation.py)");
 const bool kRecreateDir = true;
@@ -37,7 +40,7 @@ int main(int argc, char *argv[]) {
     std::srand(std::time(nullptr));
 
     // === DEFAULTS
-    int agent_count = 1;
+    int agent_count = 2;
     std::filesystem::path work_directory = std::filesystem::path("../../test_directory");
     std::filesystem::path agents_root = work_directory/"agents";
     // === DEFAULTS
@@ -61,7 +64,7 @@ int main(int argc, char *argv[]) {
     metrics_file.close();
 
     std::vector<IRemoteAgent*> remote_agents;
-    for(int i = 0; i < agent_count; i++){
+    for(int i = 0; i < kAgentCount; i++){
         remote_agents.push_back(new RemoteAgent(i, agents_root.string()));
     }
     auto* network = new TestNetwork(logger, remote_agents);
@@ -94,25 +97,55 @@ int main(int argc, char *argv[]) {
     }
 
     logger->LogInfo("[SIMULATION] Start builds");
+
+    MetricCollector::AddSingleMetric("ExperimentStartTime", MetricCollector::GetCurrentTimestamp());
+    MetricCollector::AddSingleMetric("AgentCount", std::to_string(kAgentCount));
+    MetricCollector::AddSingleMetric("IterationCount", std::to_string(kTestsCount));
+
     std::vector<std::thread*> threads;
 
-    for (int i = 0; i < agent_contents.size(); i++){// agent_contents.size()
+    for (int i = 0; i < kRequestorsCount; i++){// agent_contents.size()
         logger->LogInfo("[SIMULATION] Start simulation for agent[" + std::to_string(i) + "]");
         auto payload = [](IController* controller, Content* content, int i, int tests_count){
             for (int j = 0; j < tests_count; j++) {
-//                std::cout << "C:\\Windows\\py.exe " + kWorkflowExecutor.string() + " " + content->content_path_ << std::endl;
-//                controller->logger_->LogInfo("[SIMULATION] Constructing string...");
+
+                //Modifying content
+                std::cout << "[SIMULATION] Iteration: " << j << "Requestor: " << i << std::endl;
                 std::cout << "[SIMULATION] Constructing string..." << std::endl;
-                std::string exec_command = "C:\\Windows\\py.exe " + kWorkflowExecutor.string() + " " + content->content_path_ + " >> test.out";
-                //controller->logger_->LogInfo("[SIMULATION] Updating project in: " + content->content_path_);
-//                FILE* test = _popen(exec_command.c_str(), "r");
-//                pclose(test);
-                std::cout << "[SIMULATION] Executing content modification..." << std::endl;
-//                ShellExecute(NULL, exec_command.c_str(), NULL, NULL, NULL, SW_SHOWNORMAL);
+                if (!std::filesystem::exists(content->content_path_+"\\asd.py"))
+                    std::filesystem::copy(kWorkflowExecutor.string(), content->content_path_+"\\asd.py", std::filesystem::copy_options::overwrite_existing);
+                std::string exec_command = "C:\\Windows\\py.exe " + content->content_path_+"\\asd.py" + " " + content->content_path_ + " >> " + content->content_path_ + "\\test.out";
+                std::cout << "[SIMULATION] Executing content modification...\n" << exec_command << std::endl;
                 system(exec_command.c_str());
                 std::this_thread::sleep_for(std::chrono::seconds(i + std::rand()/((RAND_MAX + 1u)/10)));
                 std::cout << "[SIMULATION] Building content..." << std::endl;
+
+                // Getting build duration
+                auto start = std::chrono::system_clock::now();
                 controller->BuildContent(content);
+                auto end = std::chrono::system_clock::now();
+                std::chrono::duration<double> build_time = end - start;
+                MetricCollector::AddIterationMetric("BuildDuration", j, std::to_string(build_time.count()));
+
+                // Getting all cache size
+                size_t cash_size = 0;
+                for (auto dir_entry : std::filesystem::recursive_directory_iterator("../../test_directory/agents"))
+                {
+                    if (!std::filesystem::is_directory(dir_entry)) {
+                        cash_size += dir_entry.file_size();
+                    }
+                }
+                MetricCollector::AddIterationMetric("WholeCache", j, std::to_string(float(cash_size) / 1024 / 1024));
+
+                // Getting agent cache size
+                cash_size = 0;
+                for (auto dir_entry : std::filesystem::recursive_directory_iterator("../../test_directory/agents"))
+                {
+                    if (!std::filesystem::is_directory(dir_entry)) {
+                        cash_size += dir_entry.file_size();
+                    }
+                }
+                MetricCollector::AddIterationMetric("AgentCache", j, std::to_string(float(cash_size) / 1024 / 1024 / kAgentCount));
             }
         };
         threads.push_back(new std::thread(payload, agent_controllers[i], agent_contents[i], i, kTestsCount));
@@ -122,6 +155,12 @@ int main(int argc, char *argv[]) {
     for (auto* thread : threads) {
         thread->join();
     }
+
+    MetricCollector::AddSingleMetric("ExperimentEndTime", MetricCollector::GetCurrentTimestamp());
+    MetricCollector::CreateDataFiles("../../test_directory/single_metrics.csv", "../../test_directory/iteration_metrics.csv");
+
+    std::string exec_command = "C:\\Windows\\py.exe ";
+    system(exec_command.c_str());
 
 //    for(int i = 0; i < kTestsCount; i++) {
 ////        time[i] = controller->BuildContent(kBuildSize);

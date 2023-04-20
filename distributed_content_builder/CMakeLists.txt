@@ -9,7 +9,7 @@ set(HEADERS
 
 set(SOURCE
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-        )
+        MetricCollector/MetricCollector.hpp MetricCollector/MetricCollector.cpp)
 
 add_subdirectory ("Agent")
 add_subdirectory ("Content")
@@ -21,6 +21,7 @@ add_subdirectory ("Queue")
 add_subdirectory ("Task")
 add_subdirectory ("HashList")
 add_subdirectory ("HashManager")
+add_subdirectory ("MetricCollector")
 
 include_directories(./Agent/)
 include_directories(./Content/)
@@ -32,6 +33,7 @@ include_directories(./Queue/)
 include_directories(./Task/)
 include_directories(./HashList/)
 include_directories(./HashManager/)
+include_directories(./MetricCollector/)
 
 set(OPENSSL_ROOT_DIR "C:/Program\ Files/OpenSSL-Win64")
 set(OPENSSL_CRYPTO_LIBRARY "C:/Program\ Files/OpenSSL-Win64/lib")
