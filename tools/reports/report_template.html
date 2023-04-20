@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ report_title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 0;
+            text-align: center;
+        }
+        h2 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .section {
+            margin-top: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>{{ report_title }}</h1>
+<div class="section">
+    <h2>Общие данные</h2>
+    <p>Количество агентов участвовавших в имитации: {{ agent_count }}.</p>
+    <p>Количество итераций, пройденных системой: {{ iterations }}.</p>
+</div>
+<div class="section">
+    <h2>Данные в системе</h2>
+    <p>Общий объем данных, содержащихся в системе на момент окончания эксперимента: {{ data_volume }}.</p>
+    <p>Способ хранения данных в системе: {{ storage_method }}.</p>
+</div>
+<div class="section">
+    <h2>Cборки</h2>
+    <p>Среднее время сборки контента за одну итерацию: {{ avg_content_build_time }}.</p>
+    <p>Среднее время ожидания сборки контента: {{ avg_content_build_wait_time }}.</p>
+</div>
+<div class="section">
+    <h2>График зависимости объема данных от количества итераций</h2>
+    <img src="{{ wc_path }}" alt="График зависимости общего объема данных от количества итераций">
+</div>
+<div class="section">
+    <h2>График зависимости объема данных от количества итераций</h2>
+    <img src="{{ ac_path }}" alt="График зависимости объема данных на агенте от количества итераций">
+</div>
+<div class="section">
+    <h2>График зависимости времени сборки от количества итераций</h2>
+    <img src="{{ chart_path }}" alt="График зависимости объема данных от количества итераций">
+</div>
+</body>
+</html>

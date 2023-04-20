@@ -159,7 +159,7 @@ int main(int argc, char *argv[]) {
     MetricCollector::AddSingleMetric("ExperimentEndTime", MetricCollector::GetCurrentTimestamp());
     MetricCollector::CreateDataFiles("../../test_directory/single_metrics.csv", "../../test_directory/iteration_metrics.csv");
 
-    std::string exec_command = "C:\\Windows\\py.exe ";
+    std::string exec_command = "C:\\Windows\\py.exe C:\\Diploma\\tools\\reports\\generate_report.py";
     system(exec_command.c_str());
 
 //    for(int i = 0; i < kTestsCount; i++) {
